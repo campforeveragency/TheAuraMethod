@@ -496,12 +496,12 @@ const aiHTML=txt=>`<div class="ai-out">${txt.split('\n').filter(l=>l.trim()).map
 function toggleTheme(){
   S.theme=S.theme==='light'?'dark':'light';
   document.documentElement.setAttribute('data-theme',S.theme);
-  document.getElementById('theme-btn').textContent=S.theme==='dark'?'☀':'☾';
+  document.getElementById('theme-btn').textContent=S.theme==='dark'?'Light':'Dark';
   stSave();
 }
 function applyTheme(){
   document.documentElement.setAttribute('data-theme',S.theme||'light');
-  document.getElementById('theme-btn').textContent=S.theme==='dark'?'☀':'☾';
+  document.getElementById('theme-btn').textContent=S.theme==='dark'?'Light':'Dark';
 }
 
 /* ── ONBOARDING ── */
