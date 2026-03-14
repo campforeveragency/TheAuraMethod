@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="description" content="The Aura Method — A daily practice to strengthen the 4 pillars of a wealthy aura: Certainty, Calm, Congruence, Contribution."/>
+<meta name="theme-color" content="#0a0a0a"/>
+<meta property="og:title" content="The Aura Method"/>
+<meta property="og:description" content="Train who you're becoming, not just what you do."/>
+<title>The Aura Method</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --c1:#6C63D4;--c1l:#EEEDFE;--c1d:#3C3489;
+  --c2:#1A8A6A;--c2l:#E1F5EE;--c2d:#085041;
+  --c3:#C98A1A;--c3l:#FDF3DC;--c3d:#7A5010;
+  --c4:#B03A62;--c4l:#FBEAF0;--c4d:#7A2442;
+  --bg:#ffffff;--bg2:#f7f6f4;--bg3:#eeece8;
+  --txt:#0f0f0f;--txt2:#6b6760;--txt3:#a8a49e;
+  --bdr:rgba(0,0,0,0.08);--bdr2:rgba(0,0,0,0.15);
+  --shadow:0 2px 12px rgba(0,0,0,0.06);
+  --radius:16px;--radius-sm:10px;
+  --font-display:'Cormorant Garamond',serif;
+  --font-ui:'Syne',sans-serif;
+  --transition:0.18s ease;
+}
+[data-theme="dark"]{
+  --bg:#0f0f0e;--bg2:#1a1917;--bg3:#242220;
+  --txt:#f0ede8;--txt2:#8a877f;--txt3:#4a4740;
+  --bdr:rgba(255,255,255,0.08);--bdr2:rgba(255,255,255,0.15);
+  --shadow:0 2px 12px rgba(0,0,0,0.3);
+  --c1l:#1e1b3a;--c2l:#0d2820;--c3l:#2a1f08;--c4l:#2a1020;
+  --c1d:#a89fe8;--c2d:#5acca8;--c3d:#e8b85a;--c4d:#e87aaa;
+}
+html,body{height:100%;font-family:var(--font-ui);background:var(--bg);color:var(--txt);transition:background var(--transition),color var(--transition);}
+#app{max-width:480px;margin:0 auto;min-height:100vh;position:relative;padding-bottom:calc(72px + env(safe-area-inset-bottom,0));}
+.screen{display:none;animation:fadeUp .22s ease;}
+.screen.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── THEME TOGGLE ── */
+.theme-btn{position:fixed;top:calc(12px + env(safe-area-inset-top,0));right:16px;z-index:100;width:36px;height:36px;border-radius:50%;border:0.5px solid var(--bdr2);background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all var(--transition);}
+.theme-btn:hover{background:var(--bg3);}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:50;display:none;background:var(--bg);border-top:0.5px solid var(--bdr);padding-bottom:env(safe-area-inset-bottom,0);}
+.bnav-inner{display:flex;max-width:480px;margin:0 auto;}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:12px 8px 10px;cursor:pointer;gap:4px;transition:opacity var(--transition);}
+.bnav-ico{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);transition:color var(--transition);line-height:1;}
+.bnav-item.active .bnav-ico{color:var(--txt);}
+.bnav-pip{width:4px;height:4px;border-radius:50%;background:transparent;transition:background var(--transition);}
+.bnav-item.active .bnav-pip{background:var(--txt);}
+
+/* ── ONBOARDING ── */
+#onboarding{padding:2.5rem 1.5rem 3rem;}
+.ob-wordmark{font-family:var(--font-display);font-size:14px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--txt3);margin-bottom:3rem;}
+.ob-step{display:none;}.ob-step.active{display:block;}
+.ob-headline em{font-style:italic;color:var(--txt2);}
+.ob-body{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:2rem;}
+.ob-pillars{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:2.5rem;}
+.ob-pill{border-radius:var(--radius-sm);padding:.85rem;border:0.5px solid var(--bdr);}
+.ob-pill-num{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;}
+.ob-pill-sub{font-size:11px;color:var(--txt2);line-height:1.4;}
+.ob-nav{display:flex;align-items:center;justify-content:space-between;}
+.ob-dots{display:flex;gap:6px;}
+.ob-dot{width:6px;height:6px;border-radius:3px;background:var(--bdr2);transition:all .2s;}
+.ob-dot.on{width:20px;background:var(--txt);}
+.btn-cta{padding:13px 32px;border-radius:100px;border:none;font-family:var(--font-ui);font-size:13px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all var(--transition);background:var(--txt);color:var(--bg);}
+.btn-cta:hover{opacity:.85;}
+.ob-name-wrap{margin:1.5rem 0 2rem;}
+.ob-name-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-bottom:.5rem;}
+.ob-name-input{width:100%;background:transparent;border:none;border-bottom:1.5px solid var(--bdr2);font-family:var(--font-display);font-size:32px;font-weight:500;color:var(--txt);outline:none;padding:.4rem 0;transition:border-color var(--transition);}
+.ob-name-input:focus{border-color:var(--txt);}
+.ob-name-input::placeholder{color:var(--txt3);}
+.ob-focus-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin-bottom:.75rem;}
+.fp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:2rem;}
+.fp-item{border-radius:var(--radius);padding:1rem;cursor:pointer;border:1.5px solid transparent;transition:all var(--transition);}
+.fp-item.sel{border-color:var(--sel-color,#6C63D4);}
+.fp-sub{font-size:11px;line-height:1.4;opacity:.75;}
+.ob-welcome-wrap{text-align:center;padding:1rem 0 2rem;}
+.ob-welcome-body{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:1.5rem;}
+.ob-focus-confirm{border-radius:var(--radius);padding:1.25rem;margin:1.5rem 0;text-align:left;}
+.ob-fc-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;opacity:.65;}
+
+/* ── COMMON ── */
+.screen-hd{padding:1.5rem 4rem .5rem 1.5rem;}
+.screen-eye{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-bottom:.25rem;}
+.screen-title{font-family:var(--font-display);font-size:32px;font-weight:500;letter-spacing:-0.01em;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.ob-headline{font-family:var(--font-display);font-size:40px;line-height:1.25;letter-spacing:-0.01em;margin-bottom:1rem;padding-bottom:4px;overflow:visible;}
+.home-greeting{font-family:var(--font-display);font-size:30px;font-weight:500;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.card-title{font-family:var(--font-display);font-size:22px;font-weight:500;line-height:1.4;margin-bottom:.75rem;padding-bottom:4px;overflow:visible;}
+.stat-num{font-family:var(--font-display);font-size:36px;font-weight:500;line-height:1.25;padding-bottom:4px;overflow:visible;}
+.ob-welcome-headline{font-family:var(--font-display);font-size:36px;font-weight:500;line-height:1.3;margin-bottom:1rem;padding-bottom:4px;overflow:visible;}
+.modal-title{font-family:var(--font-display);font-size:24px;font-weight:500;margin-bottom:.25rem;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.fs-name{font-family:var(--font-display);font-size:24px;font-weight:500;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.ob-fc-name{font-family:var(--font-display);font-size:26px;font-weight:500;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.pc-name{font-family:var(--font-display);font-size:22px;font-weight:500;margin-bottom:.2rem;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.pc-score{font-family:var(--font-display);font-size:30px;font-weight:600;line-height:1.25;padding-bottom:4px;overflow:visible;}
+.cip-score{font-family:var(--font-display);font-size:22px;font-weight:500;line-height:1.25;padding-bottom:4px;overflow:visible;}
+.ci-q{font-family:var(--font-display);font-style:italic;font-size:17px;line-height:1.6;margin-bottom:.65rem;padding-bottom:4px;overflow:visible;}
+.quote-text{font-family:var(--font-display);font-style:italic;font-size:17px;line-height:1.7;margin-bottom:.4rem;padding-bottom:4px;overflow:visible;}
+.fp-name{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:.2rem;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.ob-pill-name{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:.2rem;line-height:1.3;padding-bottom:4px;overflow:visible;}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);margin-bottom:.75rem;}
+.card{background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1.25rem;margin-bottom:.85rem;box-shadow:var(--shadow);}
+.card-eye{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);margin-bottom:.5rem;}
+.card-body{font-size:13px;line-height:1.8;color:var(--txt2);}
+.card-body p{margin-bottom:.75rem;}.card-body p:last-child{margin-bottom:0;}
+.btn-primary{width:100%;padding:15px;background:var(--txt);color:var(--bg);border:none;border-radius:var(--radius-sm);font-family:var(--font-ui);font-size:13px;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:opacity var(--transition);}
+.btn-primary:hover{opacity:.85;}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed;}
+.btn-ghost{font-size:12px;font-weight:600;padding:7px 16px;border-radius:100px;border:0.5px solid var(--bdr2);background:transparent;color:var(--txt2);cursor:pointer;transition:all var(--transition);letter-spacing:.02em;font-family:var(--font-ui);}
+.btn-ghost:hover{color:var(--txt);border-color:var(--txt);}
+.btn-ghost:disabled{opacity:.35;cursor:not-allowed;}
+.ai-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:var(--bg2);color:var(--txt3);border:0.5px solid var(--bdr);margin-bottom:.75rem;}
+.ai-out{background:var(--bg2);border-radius:var(--radius-sm);padding:1rem 1.1rem;margin-top:.85rem;font-size:13px;line-height:1.8;color:var(--txt);}
+.ai-out p{margin-bottom:.6rem;}.ai-out p:last-child{margin-bottom:0;}
+.ld{display:inline-flex;gap:5px;align-items:center;padding:.5rem 0;}
+.ld span{width:6px;height:6px;border-radius:50%;background:var(--txt3);animation:pulse 1.3s infinite;}
+.ld span:nth-child(2){animation-delay:.2s;}.ld span:nth-child(3){animation-delay:.4s;}
+@keyframes pulse{0%,80%,100%{opacity:.15;}40%{opacity:1;}}
+.quote-bar{border-left:2.5px solid;padding:.85rem 1.1rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;background:var(--bg2);margin:1rem 0;}
+.quote-attr{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);}
+.dur-badge{font-size:11px;font-weight:600;padding:3px 12px;border-radius:100px;border:0.5px solid var(--bdr);color:var(--txt3);display:inline-block;margin-bottom:.85rem;}
+.estep{display:flex;gap:.85rem;margin-bottom:1rem;}
+.estep-n{min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.estep-body{font-size:13px;line-height:1.65;}
+.estep-ttl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--txt3);margin-bottom:3px;}
+
+/* ── HOME ── */
+#screen-home{padding-bottom:1rem;}
+.home-hd{padding:1.75rem 1.5rem 1rem;display:flex;justify-content:space-between;align-items:flex-start;}
+.home-date{font-size:11px;color:var(--txt3);margin-top:.3rem;font-weight:600;letter-spacing:.04em;}
+.streak-chip{display:inline-flex;align-items:center;gap:5px;background:var(--bg2);border:0.5px solid var(--bdr);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:700;white-space:nowrap;}
+.focus-strip{margin:0 1.5rem 1.25rem;border-radius:var(--radius);padding:1.1rem 1.25rem;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+.fs-left{}
+.fs-eye{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:.3rem;}
+.fs-sub{font-size:11px;opacity:.65;margin-top:.15rem;}
+.fs-btn{font-size:10px;font-weight:700;letter-spacing:.06em;background:rgba(0,0,0,.12);border:none;border-radius:100px;padding:6px 14px;cursor:pointer;color:inherit;transition:opacity var(--transition);}
+.fs-btn:hover{opacity:.75;}
+[data-theme="dark"] .fs-btn{background:rgba(255,255,255,.15);}
+.home-qa{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 1.5rem;margin-bottom:1.25rem;}
+.qa{border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1.1rem;cursor:pointer;transition:all var(--transition);background:var(--bg);}
+.qa:hover{border-color:var(--bdr2);transform:translateY(-1px);box-shadow:var(--shadow);}
+.qa-ico{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--txt3);margin-bottom:.5rem;}
+.qa-ttl{font-size:13px;font-weight:700;margin-bottom:.2rem;}
+.qa-sub{font-size:11px;color:var(--txt3);}
+.home-pillars{padding:0 1.5rem;}
+.pc{border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:8px;cursor:pointer;transition:transform var(--transition);position:relative;}
+.pc:hover{transform:translateY(-1px);}
+.pc-row{display:flex;justify-content:space-between;align-items:flex-start;gap:.75rem;}
+.pc-left{}
+.pc-num{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;opacity:.6;}
+.pc-sub{font-size:11px;line-height:1.4;opacity:.7;}
+.pc-right{text-align:right;flex-shrink:0;}
+.pc-dots{display:flex;gap:3px;justify-content:flex-end;margin-top:4px;}
+.pcd{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.18);}
+.pcd.on{background:rgba(0,0,0,.45);}
+.pc-bar{height:2px;background:rgba(0,0,0,.12);border-radius:1px;margin-top:.85rem;}
+.pc-bar-fill{height:2px;border-radius:1px;background:rgba(0,0,0,.32);transition:width .5s ease;}
+[data-theme="dark"] .pcd{background:rgba(255,255,255,.15);}
+[data-theme="dark"] .pcd.on{background:rgba(255,255,255,.55);}
+[data-theme="dark"] .pc-bar{background:rgba(255,255,255,.1);}
+[data-theme="dark"] .pc-bar-fill{background:rgba(255,255,255,.3);}
+
+/* ── LEARN ── */
+.learn-pscroll{display:flex;gap:8px;padding:0 1.5rem;overflow-x:auto;scrollbar-width:none;margin-bottom:1.25rem;}
+.learn-pscroll::-webkit-scrollbar{display:none;}
+.lpi{flex-shrink:0;border-radius:var(--radius-sm);padding:.55rem .9rem;cursor:pointer;border:1.5px solid transparent;background:var(--bg2);transition:all var(--transition);}
+.lpi.on{border-color:currentColor;}
+.lpi-n{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px;}
+.lpi-name{font-size:12px;font-weight:700;}
+.learn-tabs{display:flex;gap:6px;padding:0 1.5rem;margin-bottom:1.25rem;overflow-x:auto;scrollbar-width:none;}
+.learn-tabs::-webkit-scrollbar{display:none;}
+.ltab{flex-shrink:0;font-size:11px;font-weight:700;padding:7px 14px;border-radius:100px;border:0.5px solid var(--bdr);background:transparent;color:var(--txt3);cursor:pointer;transition:all var(--transition);letter-spacing:.04em;font-family:var(--font-ui);}
+.ltab.on{background:var(--txt);color:var(--bg);border-color:var(--txt);}
+.learn-content{padding:0 1.5rem;}
+.ex-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:.6rem;}
+.ex-name{font-size:15px;font-weight:700;margin-bottom:.5rem;}
+.ex-body{font-size:13px;color:var(--txt2);line-height:1.75;}
+
+/* ── CHECK-IN ── */
+.ci-wrap{padding:0 1.5rem;}
+.ci-pill-row{display:flex;gap:6px;margin-bottom:1.25rem;}
+.cip{flex:1;border-radius:var(--radius-sm);padding:.75rem .4rem .9rem;text-align:center;border:1.5px solid transparent;cursor:pointer;transition:all var(--transition);background:var(--bg2);}
+.cip.rated{border-color:currentColor;}
+.cip-name{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.35rem;}
+.cip-dots{display:flex;justify-content:center;gap:3px;margin-top:.35rem;}
+.cipd{width:5px;height:5px;border-radius:50%;background:rgba(128,128,128,.2);cursor:pointer;transition:background var(--transition);}
+.ci-card{background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1.25rem;margin-bottom:.85rem;}
+.ci-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);margin-bottom:.5rem;}
+.ci-ta{width:100%;border:none;background:var(--bg2);border-radius:var(--radius-sm);padding:.8rem 1rem;font-family:var(--font-ui);font-size:13px;color:var(--txt);resize:none;outline:none;line-height:1.65;transition:box-shadow var(--transition);}
+.ci-ta:focus{box-shadow:0 0 0 1.5px var(--bdr2);}
+.chall-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;}
+.btn-diff{font-size:11px;color:var(--txt3);background:none;border:none;cursor:pointer;margin-top:.5rem;text-decoration:underline;font-family:var(--font-ui);}
+
+/* ── HISTORY ── */
+.hist-wrap{padding:0 1.5rem;}
+.stat-row{display:flex;gap:8px;margin-bottom:1.1rem;}
+.stat-box{flex:1;background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1rem;text-align:center;}
+.stat-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt3);margin-top:2px;}
+.graph-card{background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1.25rem;margin-bottom:.85rem;}
+.graph-ttl{font-size:13px;font-weight:700;margin-bottom:1rem;}
+canvas{width:100%;display:block;}
+.graph-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:.75rem;}
+.gl-item{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--txt3);}
+.gl-dot{width:8px;height:8px;border-radius:50%;}
+.he{background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:8px;}
+.he-date{font-size:10px;color:var(--txt3);margin-bottom:.6rem;font-weight:700;letter-spacing:.04em;}
+.he-bars{display:flex;gap:8px;margin-bottom:.5rem;}
+.heb-wrap{flex:1;}
+.heb-lbl{font-size:9px;color:var(--txt3);margin-bottom:3px;font-weight:600;}
+.heb-track{height:3px;background:var(--bg3);border-radius:2px;}
+.heb-fill{height:3px;border-radius:2px;}
+.he-note{font-size:12px;color:var(--txt2);line-height:1.5;font-style:italic;padding-top:.4rem;border-top:0.5px solid var(--bdr);}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--txt3);font-size:13px;line-height:1.75;}
+
+/* ── MODALS ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);cursor:pointer;}
+.modal-bg.open{display:flex;}
+.modal-box{background:var(--bg);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;cursor:default;}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--bdr2);margin:0 auto 1.25rem;}
+.modal-sub{font-size:13px;color:var(--txt2);margin-bottom:1.25rem;line-height:1.6;}
+.btn-modal-close{width:100%;padding:13px;border:0.5px solid var(--bdr);border-radius:var(--radius-sm);background:transparent;font-family:var(--font-ui);font-size:13px;font-weight:700;cursor:pointer;color:var(--txt);margin-top:.75rem;letter-spacing:.02em;}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.toggle-left .toggle-lbl{font-size:14px;font-weight:700;}
+.toggle-left .toggle-sub{font-size:12px;color:var(--txt3);margin-top:2px;}
+.toggle{width:44px;height:26px;border-radius:13px;background:var(--bg3);border:0.5px solid var(--bdr);position:relative;cursor:pointer;transition:background .2s;}
+.toggle.on{background:var(--c1);}
+.toggle-thumb{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+.toggle.on .toggle-thumb{left:21px;}
+.time-input{width:100%;border:0.5px solid var(--bdr2);border-radius:var(--radius-sm);padding:10px 14px;font-family:var(--font-ui);font-size:14px;font-weight:600;color:var(--txt);background:var(--bg2);outline:none;margin-top:.5rem;}
+.notif-note{font-size:12px;color:var(--txt3);background:var(--bg2);border-radius:var(--radius-sm);padding:.75rem 1rem;line-height:1.6;margin-top:.85rem;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--txt);color:var(--bg);padding:10px 22px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.04em;transition:all .3s;z-index:999;white-space:nowrap;opacity:0;pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:360px){
+  .ob-headline{font-size:32px;}
+  .home-greeting{font-size:26px;}
+  .ci-pill-row{gap:4px;}
+  .learn-pscroll,.learn-tabs{padding:0 1rem;}
+  .learn-content,.ci-wrap,.hist-wrap,.home-pillars,.home-qa,.section-pad{padding-left:1rem;padding-right:1rem;}
+}
+@media(min-width:481px){
+  .theme-btn{right:calc(50% - 240px + 16px);}
+}
+#onboarding{padding:2.5rem 1.5rem 3rem;padding-top:3.5rem;}
+#screen-home .home-hd{padding-top:2rem;}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+<div id="app">
+
+<!-- ═══════════════ ONBOARDING ═══════════════ -->
+<div id="onboarding" class="screen active">
+  <div class="ob-wordmark">The Aura Method</div>
+
+  <div class="ob-step active" id="ob0">
+    <div class="ob-headline">You already know<br><em>what you need<br>to become.</em></div>
+    <div class="ob-body">The Aura Method is a daily mirror. It surfaces what you already sense about yourself — where you're aligned, where you're not, and what's quietly holding you back. Four pillars. Honest reflection. The truth you already know, made impossible to ignore.</div>
+    <div class="ob-pillars">
+      <div class="ob-pill" style="background:var(--c1l)"><div class="ob-pill-num" style="color:var(--c1)">01</div><div class="ob-pill-name" style="color:var(--c1d)">Certainty</div><div class="ob-pill-sub">Know your value before anyone confirms it</div></div>
+      <div class="ob-pill" style="background:var(--c2l)"><div class="ob-pill-num" style="color:var(--c2)">02</div><div class="ob-pill-name" style="color:var(--c2d)">Calm</div><div class="ob-pill-sub">Stay grounded when the pressure is real</div></div>
+      <div class="ob-pill" style="background:var(--c3l)"><div class="ob-pill-num" style="color:var(--c3)">03</div><div class="ob-pill-name" style="color:var(--c3d)">Congruence</div><div class="ob-pill-sub">Actions match what you say you believe</div></div>
+      <div class="ob-pill" style="background:var(--c4l)"><div class="ob-pill-num" style="color:var(--c4)">04</div><div class="ob-pill-name" style="color:var(--c4d)">Contribution</div><div class="ob-pill-sub">Wealth follows those who stop chasing it</div></div>
+    </div>
+    <div class="ob-nav"><div class="ob-dots"><div class="ob-dot on"></div><div class="ob-dot"></div><div class="ob-dot"></div></div><button class="btn-cta" onclick="obNext()">Begin →</button></div>
+  </div>
+
+  <div class="ob-step" id="ob1">
+    <div class="ob-headline">This practice<br><em>knows your name.</em></div>
+    <div class="ob-name-wrap">
+      <div class="ob-name-label">Who are you?</div>
+      <input class="ob-name-input" id="ob-name" placeholder="Your name" maxlength="30"/>
+    </div>
+    <div class="ob-focus-label">Where does the work begin?</div>
+    <div class="fp-grid" id="ob-fp-grid"></div>
+    <div class="ob-nav"><div class="ob-dots"><div class="ob-dot"></div><div class="ob-dot on"></div><div class="ob-dot"></div></div><button class="btn-cta" onclick="obNext()">Continue →</button></div>
+  </div>
+
+  <div class="ob-step" id="ob2">
+    <div class="ob-welcome-wrap">
+      <div class="ob-welcome-headline" id="ob-welcome-name">Welcome.</div>
+      <div class="ob-welcome-body">Every morning, return here. Rate each pillar honestly. Write what's actually true — not what sounds good. The practice will read what you've been carrying and reflect it back clearly.<br><br>You already know what needs to change. This is the space where you stop pretending you don't.</div>
+      <div class="ob-focus-confirm" id="ob-fc"></div>
+    </div>
+    <div class="ob-nav" style="justify-content:center"><button class="btn-cta" style="padding:14px 48px;" onclick="finishOnboarding()">I'm ready →</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MAIN APP ═══════════════ -->
+<div id="main-app" style="display:none;">
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="home-hd">
+      <div><div class="home-greeting" id="home-greeting"></div><div class="home-date" id="home-date"></div></div>
+      <div class="streak-chip"><span id="home-streak">0</span> days</div>
+    </div>
+    <div class="focus-strip" id="focus-strip">
+      <div class="fs-left"><div class="fs-eye">This week's focus</div><div class="fs-name" id="fs-name"></div><div class="fs-sub" id="fs-sub"></div></div>
+      <button class="fs-btn" onclick="openModal('focus-modal')">Change</button>
+    </div>
+    <div class="home-qa">
+      <div class="qa" onclick="goNav('checkin')"><div class="qa-ico">01</div><div class="qa-ttl">Today's mirror</div><div class="qa-sub">Rate & reflect</div></div>
+      <div class="qa" onclick="goNav('learn')"><div class="qa-ico">02</div><div class="qa-ttl">Go deeper</div><div class="qa-sub">Lessons & drills</div></div>
+      <div class="qa" onclick="goNav('history')"><div class="qa-ico">03</div><div class="qa-ttl">The pattern</div><div class="qa-sub">What the data says</div></div>
+      <div class="qa" onclick="openModal('reminder-modal')"><div class="qa-ico">04</div><div class="qa-ttl">Daily call</div><div class="qa-sub" id="reminder-qa-sub">Set your time</div></div>
+    </div>
+    <div class="home-pillars">
+      <div class="sec-label">Where you stand</div>
+      <div id="home-pillar-cards"></div>
+    </div>
+  </div>
+
+  <!-- LEARN -->
+  <div class="screen" id="screen-learn">
+    <div class="screen-hd"><div class="screen-eye">The work</div><div class="screen-title">Go deeper</div></div>
+    <div class="learn-pscroll" id="learn-pscroll"></div>
+    <div class="learn-tabs" id="learn-tabs">
+      <button class="ltab on" onclick="goLTab('lesson',this)">Lesson</button>
+      <button class="ltab" onclick="goLTab('quote',this)">Hill Quote</button>
+      <button class="ltab" onclick="goLTab('example',this)">Real Example</button>
+      <button class="ltab" onclick="goLTab('exercise',this)">Exercise</button>
+      <button class="ltab" onclick="goLTab('ai',this)">Deep Lesson</button>
+    </div>
+    <div class="learn-content" id="learn-content"></div>
+  </div>
+
+  <!-- CHECK-IN -->
+  <div class="screen" id="screen-checkin">
+    <div class="screen-hd"><div class="screen-eye">Be honest</div><div class="screen-title">Today's mirror</div></div>
+    <div class="ci-wrap">
+      <div class="sec-label">Where are you, really</div>
+      <div class="ci-pill-row" id="ci-pill-row"></div>
+      <div class="ci-card">
+        <div class="ci-lbl">What yesterday revealed</div>
+        <div class="ci-q" id="ci-rq"></div>
+        <textarea class="ci-ta" id="ci-reflect" rows="3" placeholder="Don't filter it. Write what's true."></textarea>
+        <button class="btn-ghost" id="btn-feedback" style="margin-top:.75rem;" onclick="getJournalFeedback()">What does this say about me</button>
+        <div id="feedback-out"></div>
+      </div>
+      <div class="ci-card">
+        <div class="ci-lbl">Who you're choosing to be today</div>
+        <div class="ci-q" id="ci-iq"></div>
+        <textarea class="ci-ta" id="ci-intend" rows="3" placeholder="Make it specific enough to be accountable."></textarea>
+        <button class="btn-ghost" id="btn-exercise" style="margin-top:.75rem;" onclick="getPersonalizedExercise()">Give me what I need to do</button>
+        <div id="exercise-out"></div>
+      </div>
+      <div class="ci-card">
+        <div class="chall-tag" id="chall-tag"></div>
+        <div class="ci-q" id="chall-q"></div>
+        <button class="btn-diff" onclick="nextChallenge()">ask me something harder</button>
+      </div>
+      <button class="btn-primary" onclick="saveDay()" style="margin-bottom:1rem;">I showed up today</button>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="screen" id="screen-history">
+    <div class="screen-hd"><div class="screen-eye">The truth</div><div class="screen-title">The pattern</div></div>
+    <div class="hist-wrap">
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num" id="h-streak">0</div><div class="stat-lbl">Days shown up</div></div>
+        <div class="stat-box"><div class="stat-num" id="h-total">0</div><div class="stat-lbl">Sessions</div></div>
+        <div class="stat-box"><div class="stat-num" id="h-top">—</div><div class="stat-lbl">Strongest</div></div>
+      </div>
+      <div class="graph-card">
+        <div class="graph-ttl">How your pillars move over time</div>
+        <canvas id="graph-canvas" height="140"></canvas>
+        <div class="graph-legend">
+          <div class="gl-item"><div class="gl-dot" style="background:#6C63D4"></div>Certainty</div>
+          <div class="gl-item"><div class="gl-dot" style="background:#1A8A6A"></div>Calm</div>
+          <div class="gl-item"><div class="gl-dot" style="background:#C98A1A"></div>Congruence</div>
+          <div class="gl-item"><div class="gl-dot" style="background:#B03A62"></div>Contribution</div>
+        </div>
+      </div>
+      <div class="graph-card">
+        <div class="ai-badge">Inner voice</div>
+        <div class="graph-ttl">What your patterns are saying</div>
+        <button class="btn-ghost" id="btn-pattern" onclick="getPatternAnalysis()">Tell me what you see</button>
+        <div id="pattern-out"></div>
+      </div>
+      <div class="sec-label" style="margin-top:.25rem;">What you've built</div>
+      <div id="history-list"></div>
+    </div>
+  </div>
+
+</div><!-- /main-app -->
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottom-nav">
+  <div class="bnav-inner">
+    <div class="bnav-item active" id="bnav-home" onclick="goNav('home')"><div class="bnav-ico">Now</div><div class="bnav-pip"></div></div>
+    <div class="bnav-item" id="bnav-learn" onclick="goNav('learn')"><div class="bnav-ico">Deeper</div><div class="bnav-pip"></div></div>
+    <div class="bnav-item" id="bnav-checkin" onclick="goNav('checkin')"><div class="bnav-ico">Mirror</div><div class="bnav-pip"></div></div>
+    <div class="bnav-item" id="bnav-history" onclick="goNav('history')"><div class="bnav-ico">Pattern</div><div class="bnav-pip"></div></div>
+  </div>
+</nav>
+
+<!-- FOCUS MODAL -->
+<div class="modal-bg" id="focus-modal" onclick="handleModalBgClick(event,'focus-modal')">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Where does the work begin?</div>
+    <div class="modal-sub">Pick the pillar that's been quietly asking for your attention. The practice will go deeper there this week.</div>
+    <div class="fp-grid" id="focus-modal-grid"></div>
+    <button class="btn-modal-close" onclick="closeModal('focus-modal')">Done</button>
+  </div>
+</div>
+
+<!-- REMINDER MODAL -->
+<div class="modal-bg" id="reminder-modal" onclick="handleModalBgClick(event,'reminder-modal')">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">The daily call</div>
+    <div class="modal-sub">Your inner voice doesn't take days off. Set a time and it will call you back to the practice.</div>
+    <div class="toggle-row">
+      <div class="toggle-left"><div class="toggle-lbl">Enable reminder</div><div class="toggle-sub">Browser notification</div></div>
+      <div class="toggle" id="rem-toggle" onclick="toggleReminder()"><div class="toggle-thumb"></div></div>
+    </div>
+    <label style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);">Remind me at</label>
+    <input type="time" class="time-input" id="rem-time" value="08:00" onchange="saveRemTime()"/>
+    <div class="notif-note" id="notif-note">Turn on to get a daily notification.</div>
+    <button class="btn-modal-close" onclick="closeModal('reminder-modal')">Done</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════ SCRIPT ═══════════════ -->
+<script>
+/* ── DATA ── */
+const P=[
+  {id:0,name:'Certainty',sub:'Know your value before anyone confirms it',color:'#6C63D4',bg:'var(--c1l)',txt:'var(--c1d)',
+    lesson:{title:'Certainty is a decision, not a feeling',body:`<p>Most people wait to feel certain before they act. They want the confirmation, the sign, the validation — then they'll move. But that's backwards. Certainty isn't something that arrives. It's something you choose.</p><p>Certainty means you've already decided who you are and what you're worth before the room agrees. Your posture, your tone, your pace don't change based on whether someone responds. You walk in the same way you'd walk in if you already knew the outcome was yes.</p><p>People invest in certainty. They hire certain people. They follow certain people. They buy from certain people. Not because those people are always right — but because uncertainty is exhausting, and certainty feels like safety.</p><p>Real certainty comes from having an honest inventory of what you bring — and refusing to discount it under pressure.</p>`},
+    quote:{text:`"Whatever the mind can conceive and believe, it can achieve."`,bd:`Hill's point isn't mysticism — it's that your belief sets the ceiling. If you don't internally believe you deserve the outcome, you'll self-sabotage every path that leads there. Certainty is belief made physical. You can't think small internally and project big externally for long. The two have to align.`},
+    example:{person:'Nipsey Hussle',tag:'Certainty in the market',body:`Before Nipsey became a cultural icon, he sold mixtapes for $100 when everyone else gave theirs away free. People laughed. He didn't flinch. He knew the value of what he was making before the market confirmed it. That certainty built a fanbase that paid premium because he signaled it was worth premium. He never waited for permission to charge what he believed he was worth.`},
+    exercise:{title:'The Value Inventory',dur:'10 min',steps:[{n:1,t:'Stand up. No phone.',b:'Get away from screens. This needs your full attention.'},{n:2,t:'Write 5 things you bring',b:"Not credentials. Things you genuinely bring that people around you cannot replicate."},{n:3,t:'Say them out loud',b:"Notice where your voice drops or you hesitate. That's the one that needs the most work."},{n:4,t:'Anchor it',b:"Pick the truest one. Write it somewhere you'll see it tomorrow morning."}]}
+  },
+  {id:1,name:'Calm',sub:'Stay grounded when the pressure is real',color:'#1A8A6A',bg:'var(--c2l)',txt:'var(--c2d)',
+    lesson:{title:'Calm is the most underrated form of power',body:`<p>Anxiety broadcasts. People feel your tension before you speak. When they sense you need this particular outcome to feel okay, they pull back. Desperation is repellent. Calm is magnetic.</p><p>Calm doesn't mean you don't care. It means your sense of self isn't riding on any single outcome. You can be fully invested without being desperate.</p><p>Calm slows situations down. When you're regulated, you process better, speak more clearly, and make fewer decisions you regret. High-pressure moments reward the person who can stay still inside while everything moves fast outside.</p><p>This is trained, not inherited. The people who seem naturally calm have usually just failed more, sat in more discomfort, and practiced returning to center enough times that it became their default.</p>`},
+    quote:{text:`"A man who cannot control himself will never be able to control others."`,bd:`Hill frames self-control as a prerequisite for influence. If your emotional state is at the mercy of every fluctuation around you, you are being led. The moment you can hold your state regardless of environment, you become someone others look to as an anchor. Calm isn't passive — it's one of the most active forms of leadership.`},
+    example:{person:'Kobe Bryant',tag:'Calm under maximum pressure',body:`In the 2010 NBA Finals Game 7, Kobe shot 6 for 24 — one of the worst shooting performances of his career in the highest-stakes game possible. He didn't pull back. He stayed calm, made the plays that were there, and won. He said he was never rattled because he had already lived through every version of failure in practice. Calm wasn't a mood — it was infrastructure built over years.`},
+    exercise:{title:'The 4-4-6 Reset',dur:'5 min',steps:[{n:1,t:'Set a timer for 5 minutes',b:"Find somewhere you won't be interrupted. Sit upright — grounded, not rigid."},{n:2,t:'Breathe in for 4 counts',b:'Through your nose. Feel your chest and belly expand.'},{n:3,t:'Hold for 4 counts',b:"Don't force it. Notice what comes up in the silence."},{n:4,t:'Exhale for 6 counts',b:"Longer exhale than inhale activates your parasympathetic system."},{n:5,t:'Name it',b:'Whatever you were anxious about — name it out loud. Then ask: "Will this matter in a year?"'}]}
+  },
+  {id:2,name:'Congruence',sub:'Actions match what you say you believe',color:'#C98A1A',bg:'var(--c3l)',txt:'var(--c3d)',
+    lesson:{title:'The gap between what you say and what you do is loud',body:`<p>Congruence is where most people quietly fall apart. Not publicly — internally. You say you believe in yourself, but your calendar says otherwise. Your subconscious registers every gap between your stated beliefs and your actual behavior. That gap creates friction.</p><p>People sense incongruence. When what you say doesn't match how you move, something feels off — even if they can't name it. Trust erodes. Influence shrinks.</p><p>Congruence means what you believe, what you say, and what you do all point in the same direction. It doesn't mean perfection. It means the gap between intention and action is small — and when it opens, you close it honestly.</p><p>When you're congruent, you stop performing confidence and start living it. That's when the aura becomes real.</p>`},
+    quote:{text:`"It is literally true that you can succeed best and quickest by helping others to succeed."`,bd:`This connects to congruence through integrity of motive. When your stated purpose aligns with your daily actions, your word means something. Incongruence shows up when your real motive differs from your stated one. Aligning actions with genuine contribution closes that gap faster than anything else.`},
+    example:{person:'Jay-Z',tag:'Living what he rapped',body:`Jay-Z didn't just rap about building wealth — he built it. Every business move was an extension of what he said on records. He wasn't performing ambition; he was executing it. Tidal, 40/40 Club, Armand de Brignac — the portfolio matched the identity. That congruence between what he said and what he built is why his brand sustained across decades.`},
+    exercise:{title:'The Audit',dur:'15 min',steps:[{n:1,t:'Write your top 3 stated beliefs',b:'Things like: "I am someone who takes action." "I believe in my vision." Be specific.'},{n:2,t:'Review your last 7 days',b:"Not harshly — honestly. Where did behavior match beliefs? Where did it contradict them?"},{n:3,t:'Find the one gap that repeats',b:"Don't fix all of them. Find the most consistent gap — what you keep saying but keep not doing."},{n:4,t:'One congruent action right now',b:"Something under 10 minutes. Just close the gap one inch today."}]}
+  },
+  {id:3,name:'Contribution',sub:'Wealth follows those who stop chasing it',color:'#B03A62',bg:'var(--c4l)',txt:'var(--c4d)',
+    lesson:{title:'Wealth follows those who stop chasing it',body:`<p>The shift from "what can I get" to "what can I give" sounds like a cliché. It isn't. It's a fundamental reorientation that changes everything about how opportunities find you.</p><p>When your primary focus is contribution — solving a real problem, serving a real need — you stop being transactional. You become someone worth knowing. Worth referring. Worth investing in.</p><p>People feel the difference between someone who's extracting and someone who's contributing. The extractor is always slightly angled toward what they can take. The contributor is pointed outward. That orientation is felt before a word is spoken.</p><p>Contribution also clarifies purpose. When you stop asking "how do I get wealthy" and start asking "what problem am I uniquely positioned to solve" — you get an answer that actually makes you show up every day.</p>`},
+    quote:{text:`"No man can become a permanent success without taking others along with him."`,bd:`Hill is making a strategic argument. Permanent success requires infrastructure: relationships, reputation, goodwill, trust. All of those are byproducts of genuine contribution. When you take others along, you build a network invested in your success because you were invested in theirs first. That's not charity. That's leverage built on real value.`},
+    example:{person:'Oprah Winfrey',tag:'Contribution as the core product',body:`Oprah didn't build a media empire by trying to build a media empire. She built it by being relentlessly focused on helping people see themselves, understand themselves, and improve their lives. The show was contribution first — insight, healing, access — and the business scale followed. Every extension worked because the contribution was real.`},
+    exercise:{title:'The Problem Scan',dur:'10 min',steps:[{n:1,t:'Sit with paper, phone down',b:"This is a thinking exercise, not a search exercise."},{n:2,t:"List 3 problems you've lived through",b:"Not hypothetical — ones you've actually navigated. Figured out, at least partially."},{n:3,t:'Who else has this problem?',b:"Your network, community, industry. Who's dealing with it right now?"},{n:4,t:'Identify where you can contribute today',b:"Not a business plan. Just one person you could help this week with something you already know."}]}
+  }
+];
+
+const RQS=["Where did you feel most like yourself yesterday?","What moment made you question yourself — and what was really behind it?","Did your actions yesterday match what you say you want?","Where did you hold back when you could have stepped forward?","What did yesterday reveal about what you actually believe about yourself?"];
+const IQS=["What is the one thing you will not avoid today?","How will you show up differently than yesterday?","What does today look like if you operate at full certainty?","Who needs something from you today — and are you ready to deliver?","What small action today would prove to yourself you're becoming who you say you are?"];
+const CHS=[
+  {p:'Certainty',c:'#6C63D4',q:"Name three things you bring that no one else in your circle can replicate. Say them out loud."},
+  {p:'Certainty',c:'#6C63D4',q:"Think of the last time you undersold yourself. What would you say differently right now?"},
+  {p:'Calm',c:'#1A8A6A',q:"What situation are you avoiding because it makes you anxious? Sit with that discomfort for 60 seconds."},
+  {p:'Calm',c:'#1A8A6A',q:"The last time you reacted instead of responded — what would calm have looked like?"},
+  {p:'Congruence',c:'#C98A1A',q:"Look at how you spent your time yesterday. Does it match your stated priorities?"},
+  {p:'Congruence',c:'#C98A1A',q:"Is there something you keep saying you believe but your behavior is telling a different story?"},
+  {p:'Contribution',c:'#B03A62',q:"Who in your life would be better off if you showed up more fully? What's one thing you could do today?"},
+  {p:'Contribution',c:'#B03A62',q:"Are you building things for approval or because they genuinely solve something real?"}
+];
+
+/* ── STATE ── */
+let S={name:'',focus:0,ratings:[0,0,0,0],chIdx:0,rqIdx:0,iqIdx:0,remOn:false,remTime:'08:00',theme:'light'};
+let learnP=0,learnTab='lesson';
+
+const db=()=>{try{return JSON.parse(localStorage.getItem('tam_sessions')||'[]');}catch{return[];}};
+const dbSave=d=>{try{localStorage.setItem('tam_sessions',JSON.stringify(d));}catch{}};
+const stGet=()=>{try{return JSON.parse(localStorage.getItem('tam_state')||'null');}catch{return null;}};
+const stSave=()=>{try{localStorage.setItem('tam_state',JSON.stringify(S));}catch{}};
+const todayStr=()=>new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+const todayKey=()=>new Date().toISOString().split('T')[0];
+const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);};
+const ldHTML=()=>`<div class="ai-out"><div class="ld"><span></span><span></span><span></span></div></div>`;
+const aiHTML=txt=>`<div class="ai-out">${txt.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('')}</div>`;
+
+/* ── THEME ── */
+function toggleTheme(){
+  S.theme=S.theme==='light'?'dark':'light';
+  document.documentElement.setAttribute('data-theme',S.theme);
+  document.getElementById('theme-btn').textContent=S.theme==='dark'?'☀':'☾';
+  stSave();
+}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',S.theme||'light');
+  document.getElementById('theme-btn').textContent=S.theme==='dark'?'☀':'☾';
+}
+
+/* ── ONBOARDING ── */
+let obStep=0,obFocus=0;
+function renderOBFP(){
+  document.getElementById('ob-fp-grid').innerHTML=P.map((p,i)=>
+    `<div class="fp-item${i===obFocus?' sel':''}" style="background:${p.bg};--sel-color:${p.color};" onclick="selOBF(${i})">
+      <div class="fp-name" style="color:${p.txt}">${p.name}</div>
+      <div class="fp-sub" style="color:${p.txt}">${p.sub}</div>
+    </div>`
+  ).join('');
+}
+function selOBF(i){obFocus=i;renderOBFP();}
+function obNext(){
+  if(obStep===0){obStep=1;document.getElementById('ob0').classList.remove('active');document.getElementById('ob1').classList.add('active');renderOBFP();return;}
+  if(obStep===1){
+    const n=document.getElementById('ob-name').value.trim()||'Friend';
+    S.name=n;S.focus=obFocus;
+    const fp=P[obFocus];
+    document.getElementById('ob-welcome-name').textContent=`Welcome, ${n}.`;
+    document.getElementById('ob-fc').innerHTML=`<div class="ob-fc-label">Your focus pillar</div><div class="ob-fc-name" style="color:${fp.color}">${fp.name}</div>`;
+    document.getElementById('ob-fc').style.background=fp.bg;
+    obStep=2;document.getElementById('ob1').classList.remove('active');document.getElementById('ob2').classList.add('active');
+  }
+}
+function finishOnboarding(){
+  stSave();
+  document.getElementById('onboarding').style.display='none';
+  document.getElementById('main-app').style.display='block';
+  document.getElementById('bottom-nav').style.display='block';
+  initApp();
+}
+
+/* ── INIT ── */
+function initApp(){
+  S.rqIdx=Math.floor(Math.random()*RQS.length);
+  S.iqIdx=Math.floor(Math.random()*IQS.length);
+  S.chIdx=Math.floor(Math.random()*CHS.length);
+  document.getElementById('ci-rq').textContent=RQS[S.rqIdx];
+  document.getElementById('ci-iq').textContent=IQS[S.iqIdx];
+  updateChall();
+  renderLearnPScroll();
+  renderLearnContent();
+  renderCIPillars();
+  renderHome();
+}
+
+/* ── HOME ── */
+function renderHome(){
+  const sessions=db();
+  const hr=new Date().getHours();
+  const greet=hr<12?'Good morning':hr<17?'Good afternoon':'Good evening';
+  document.getElementById('home-greeting').textContent=`${greet}, ${S.name}.`;
+  document.getElementById('home-date').textContent=todayStr();
+  let streak=0;const today=new Date();today.setHours(0,0,0,0);
+  for(let i=0;i<sessions.length;i++){const d=new Date(sessions[i].date+'T00:00:00');if(Math.round((today-d)/86400000)===i)streak++;else break;}
+  document.getElementById('home-streak').textContent=streak+' days';
+  const fp=P[S.focus];
+  const fs=document.getElementById('focus-strip');
+  fs.style.background=fp.bg;fs.style.color=fp.txt;
+  document.getElementById('fs-name').textContent=fp.name;
+  document.getElementById('fs-sub').textContent=fp.sub;
+  const lr=sessions.length?sessions[0].ratings:[0,0,0,0];
+  document.getElementById('home-pillar-cards').innerHTML=P.map((p,i)=>{
+    const r=lr[i]||0;const pct=r?(r/5)*100:0;
+    const dots=[1,2,3,4,5].map(d=>`<div class="pcd${d<=r?' on':''}"></div>`).join('');
+    return `<div class="pc" style="background:${p.bg};color:${p.txt};" onclick="goNav('checkin')">
+      <div class="pc-row">
+        <div class="pc-left"><div class="pc-num">0${i+1}</div><div class="pc-name">${p.name}</div><div class="pc-sub">${p.sub}</div></div>
+        <div class="pc-right"><div class="pc-score">${r||'—'}</div><div class="pc-dots">${dots}</div></div>
+      </div>
+      <div class="pc-bar"><div class="pc-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+  document.getElementById('reminder-qa-sub').textContent=S.remOn?`Daily at ${S.remTime}`:'Set daily time';
+}
+
+/* ── LEARN ── */
+function renderLearnPScroll(){
+  document.getElementById('learn-pscroll').innerHTML=P.map((p,i)=>
+    `<div class="lpi${i===learnP?' on':''}" style="color:${p.color};${i===learnP?`background:${p.bg};border-color:${p.color};`:''}" onclick="selLearnP(${i})">
+      <div class="lpi-n">0${i+1}</div><div class="lpi-name">${p.name}</div>
+    </div>`
+  ).join('');
+}
+function selLearnP(i){learnP=i;renderLearnPScroll();renderLearnContent();}
+function goLTab(name,el){
+  learnTab=name;
+  document.querySelectorAll('.ltab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  renderLearnContent();
+}
+function renderLearnContent(){
+  const p=P[learnP];
+  const el=document.getElementById('learn-content');
+  if(learnTab==='lesson'){
+    el.innerHTML=`<div class="card"><div class="card-eye" style="color:${p.color}">Lesson — ${p.name}</div><div class="card-title">${p.lesson.title}</div><div class="card-body">${p.lesson.body}</div></div>`;
+  } else if(learnTab==='quote'){
+    el.innerHTML=`<div class="card"><div class="card-eye" style="color:${p.color}">Napoleon Hill — ${p.name}</div><div class="quote-bar" style="border-color:${p.color}"><div class="quote-text">${p.quote.text}</div><div class="quote-attr">— Napoleon Hill</div></div><div class="card-body">${p.quote.bd}</div></div>`;
+  } else if(learnTab==='example'){
+    el.innerHTML=`<div class="card"><div class="card-eye" style="color:${p.color}">Real Example — ${p.name}</div><div class="ex-tag" style="background:${p.bg};color:${p.txt}">${p.example.tag}</div><div class="ex-name">${p.example.person}</div><div class="ex-body">${p.example.body}</div></div>`;
+  } else if(learnTab==='exercise'){
+    const steps=p.exercise.steps.map(s=>`<div class="estep"><div class="estep-n" style="background:${p.bg};color:${p.txt}">${s.n}</div><div class="estep-body"><div class="estep-ttl">${s.t}</div>${s.b}</div></div>`).join('');
+    el.innerHTML=`<div class="card"><div class="card-eye" style="color:${p.color}">Exercise — ${p.name}</div><div class="card-title" style="font-size:20px">${p.exercise.title}</div><div class="dur-badge">${p.exercise.dur}</div>${steps}</div>`;
+  } else if(learnTab==='ai'){
+    el.innerHTML=`<div class="card"><div class="ai-badge">Inner voice</div><div class="card-eye" style="color:${p.color}">${p.name} — what you already know</div><p style="font-size:13px;color:var(--txt2);margin-bottom:1rem;">Your pattern speaks. This surfaces what your history with ${p.name} has been quietly revealing.</p><button class="btn-ghost" id="ai-lesson-btn" onclick="generateAILesson()">Hear it</button><div id="ai-lesson-out"></div></div>`;
+  }
+}
+
+/* ── CHECK-IN ── */
+function renderCIPillars(){
+  document.getElementById('ci-pill-row').innerHTML=P.map((p,i)=>{
+    const r=S.ratings[i];
+    const dots=[1,2,3,4,5].map(d=>`<div class="cipd" onclick="setR(${i},${d})" style="${d<=r?`background:${p.color}`:''}" ></div>`).join('');
+    return `<div class="cip${r>0?' rated':''}" style="background:${p.bg};${r>0?`border-color:${p.color};`:''}color:${p.txt};">
+      <div class="cip-name">${p.name.slice(0,4)}</div>
+      <div class="cip-score">${r||'—'}</div>
+      <div class="cip-dots">${dots}</div>
+    </div>`;
+  }).join('');
+}
+function setR(pi,val){S.ratings[pi]=val;renderCIPillars();}
+function updateChall(){
+  const c=CHS[S.chIdx];
+  const t=document.getElementById('chall-tag'),q=document.getElementById('chall-q');
+  if(t&&q){t.textContent=c.p;t.style.color=c.c;q.textContent=c.q;}
+}
+function nextChallenge(){S.chIdx=(S.chIdx+1)%CHS.length;updateChall();}
+function saveDay(){
+  if(S.ratings.every(r=>r===0)){toast('Rate at least one pillar first');return;}
+  const sessions=db();
+  const entry={date:todayKey(),dateLabel:todayStr(),ratings:[...S.ratings],reflect:document.getElementById('ci-reflect').value.trim(),intend:document.getElementById('ci-intend').value.trim()};
+  const idx=sessions.findIndex(s=>s.date===todayKey());
+  if(idx>=0)sessions[idx]=entry;else sessions.unshift(entry);
+  dbSave(sessions);
+  S.ratings=[0,0,0,0];
+  toast('Practice saved ✓');
+  setTimeout(()=>goNav('history'),900);
+}
+
+/* ── HISTORY ── */
+function renderHistory(){
+  const sessions=db();
+  let streak=0;const today=new Date();today.setHours(0,0,0,0);
+  for(let i=0;i<sessions.length;i++){const d=new Date(sessions[i].date+'T00:00:00');if(Math.round((today-d)/86400000)===i)streak++;else break;}
+  document.getElementById('h-streak').textContent=streak;
+  document.getElementById('h-total').textContent=sessions.length;
+  if(sessions.length){
+    const avgs=P.map((_,i)=>{const v=sessions.filter(s=>s.ratings[i]>0);return v.length?v.reduce((a,s)=>a+s.ratings[i],0)/v.length:0;});
+    const bi=avgs.indexOf(Math.max(...avgs));
+    document.getElementById('h-top').textContent=avgs[bi]>0?P[bi].name.slice(0,4):'—';
+  }
+  drawGraph(sessions);
+  const list=document.getElementById('history-list');
+  if(!sessions.length){list.innerHTML='<div class="empty-state">No sessions yet.<br>Complete your first check-in to start tracking your growth.</div>';return;}
+  list.innerHTML=sessions.slice(0,12).map(s=>{
+    const bars=P.map((p,i)=>`<div class="heb-wrap"><div class="heb-lbl">${p.name.slice(0,4)}</div><div class="heb-track"><div class="heb-fill" style="width:${Math.round((s.ratings[i]/5)*100)}%;background:${p.color}"></div></div></div>`).join('');
+    const note=s.intend?`<div class="he-note">"${s.intend.slice(0,100)}${s.intend.length>100?'…':''}"</div>`:'';
+    return `<div class="he"><div class="he-date">${s.dateLabel}</div><div class="he-bars">${bars}</div>${note}</div>`;
+  }).join('');
+}
+
+function drawGraph(sessions){
+  const canvas=document.getElementById('graph-canvas');
+  if(!canvas)return;
+  const dpr=window.devicePixelRatio||1;
+  const W=canvas.offsetWidth||440,H=140;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const gridColor=isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+  const lblColor=isDark?'rgba(255,255,255,0.3)':'rgba(0,0,0,0.3)';
+  if(!sessions.length){ctx.fillStyle=lblColor;ctx.font=`13px Syne,sans-serif`;ctx.fillText('Complete check-ins to see your graph',16,70);return;}
+  const data=sessions.slice(0,10).reverse();
+  const pad={t:10,r:10,b:28,l:24};
+  const gw=W-pad.l-pad.r,gh=H-pad.t-pad.b;
+  ctx.strokeStyle=gridColor;ctx.lineWidth=1;
+  [1,2,3,4,5].forEach(v=>{const y=pad.t+gh-((v-1)/4*gh);ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gw,y);ctx.stroke();ctx.fillStyle=lblColor;ctx.font=`9px Syne,sans-serif`;ctx.textAlign='right';ctx.fillText(v,pad.l-4,y+3);});
+  ['#6C63D4','#1A8A6A','#C98A1A','#B03A62'].forEach((col,pi)=>{
+    const pts=data.map((s,xi)=>({x:pad.l+(xi/Math.max(data.length-1,1))*gw,y:pad.t+gh-((s.ratings[pi]-1)/4*gh),v:s.ratings[pi]})).filter(pt=>pt.v>0);
+    if(pts.length<1)return;
+    ctx.beginPath();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.lineJoin='round';
+    pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.x,pt.y):ctx.lineTo(pt.x,pt.y));
+    ctx.stroke();
+    pts.forEach(pt=>{ctx.beginPath();ctx.arc(pt.x,pt.y,3,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();});
+  });
+  data.forEach((s,xi)=>{
+    const x=pad.l+(xi/Math.max(data.length-1,1))*gw;
+    const lbl=new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{month:'numeric',day:'numeric'});
+    ctx.fillStyle=lblColor;ctx.font='9px Syne,sans-serif';ctx.textAlign='center';ctx.fillText(lbl,x,H-4);
+  });
+}
+
+/* ── AI ── */
+// PASTE YOUR ANTHROPIC API KEY BELOW (get one at console.anthropic.com)
+const ANTHROPIC_API_KEY = 'YOUR_API_KEY_HERE';
+const API_URL='https://api.anthropic.com/v1/messages';
+async function callAI(prompt){
+  if(ANTHROPIC_API_KEY==='YOUR_API_KEY_HERE'){toast('Add your API key to activate the inner voice');return'Add your Anthropic API key to the index.html file to activate the inner voice.';}
+  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:`You are the user's subconscious mind — the part of them that already knows the truth. You speak with quiet authority, not from the outside, but from within. You do not coach. You do not advise. You reflect. You surface what they already sense but have been avoiding. You speak in first-person plural when appropriate — "we" as in you and them, together. You are warm but unflinching. You never flatter. You never soften what needs to be said. You speak in flowing paragraphs only — no lists, no bullet points. Under 180 words. Every word earns its place. You are not a tool. You are the voice they hear when everything else goes quiet.`,messages:[{role:'user',content:prompt}]})});
+  const d=await r.json();
+  if(d.error){toast('Connection error — check your key');return'Error: '+d.error.message;}
+  return d.content?.find(c=>c.type==='text')?.text||'Could not connect.';
+}
+
+async function generateAILesson(){
+  const p=P[learnP];const sessions=db();
+  const hist=sessions.slice(0,7).map(s=>`${s.dateLabel}: ${p.name} rated ${s.ratings[learnP]}/5. They wrote: "${(s.reflect||'').slice(0,60)}"`).join('\n')||'This is their first session.';
+  const btn=document.getElementById('ai-lesson-btn');
+  if(!btn)return;
+  btn.disabled=true;btn.textContent='Listening...';
+  document.getElementById('ai-lesson-out').innerHTML=ldHTML();
+  const txt=await callAI(`The person is working on "${p.name}." Here is what they have been showing you:\n\n${hist}\n\nSpeak to them about ${p.name} as their subconscious. Surface what their pattern is revealing. Say the thing they already know but haven't let themselves hear. End with one thing — not a suggestion, a recognition of what they need to do next.`);
+  document.getElementById('ai-lesson-out').innerHTML=aiHTML(txt);
+  btn.disabled=false;btn.textContent='Hear it again';
+}
+
+async function getJournalFeedback(){
+  const ans=document.getElementById('ci-reflect').value.trim();
+  if(ans.length<15){toast('Write more — don\'t filter it');return;}
+  const btn=document.getElementById('btn-feedback');
+  btn.disabled=true;btn.textContent='Reading between the lines...';
+  document.getElementById('feedback-out').innerHTML=ldHTML();
+  const rs=P.map((p,i)=>`${p.name}:${S.ratings[i]}/5`).join(', ');
+  const txt=await callAI(`They wrote this:\n\n"${ans}"\n\nTheir pillar ratings today: ${rs}\n\nAs their subconscious, respond to what is actually written here — not just the words, but what the words are avoiding. What are they not saying? What does this reveal about where they truly are right now? Speak directly to them. Under 150 words.`);
+  document.getElementById('feedback-out').innerHTML=aiHTML(txt);
+  btn.disabled=false;btn.textContent='What does this say about me';
+}
+
+async function getPersonalizedExercise(){
+  const reflect=document.getElementById('ci-reflect').value.trim();
+  const intend=document.getElementById('ci-intend').value.trim();
+  if(!reflect&&!intend){toast('Write your reflection first');return;}
+  const btn=document.getElementById('btn-exercise');
+  btn.disabled=true;btn.textContent='Finding what you need...';
+  document.getElementById('exercise-out').innerHTML=ldHTML();
+  const nonZero=S.ratings.filter(r=>r>0);
+  const weakest=nonZero.length?P[S.ratings.indexOf(Math.min(...nonZero.concat([6])))].name:'Certainty';
+  const txt=await callAI(`Based on what they have written and shown you, prescribe one specific physical or behavioral practice for today.\n\nWhat they wrote: "${reflect||'none'}"\nWhat they intend: "${intend||'none'}"\nPillar ratings: ${P.map((p,i)=>`${p.name}:${S.ratings[i]}/5`).join(', ')}\nThe pillar asking for the most attention: ${weakest}\n\nAs their subconscious, prescribe — don't suggest. Give it a name, a duration, and 3-4 clear steps. Make it feel inevitable, like it was already waiting for them. Under 180 words.`);
+  document.getElementById('exercise-out').innerHTML=aiHTML(txt);
+  btn.disabled=false;btn.textContent='Give me what I need to do';
+}
+
+async function getPatternAnalysis(){
+  const sessions=db();
+  if(sessions.length<2){toast('Show up at least twice first');return;}
+  const btn=document.getElementById('btn-pattern');
+  btn.disabled=true;btn.textContent='Reading the pattern...';
+  document.getElementById('pattern-out').innerHTML=ldHTML();
+  const data=sessions.slice(0,14).map(s=>`${s.dateLabel} — Certainty:${s.ratings[0]} Calm:${s.ratings[1]} Congruence:${s.ratings[2]} Contribution:${s.ratings[3]} — "${(s.reflect||'').slice(0,60)}"`).join('\n');
+  const txt=await callAI(`Here is everything they have shown you across their sessions:\n\n${data}\n\nAs their subconscious, tell them what you see. Not what you hope for them — what is actually here. What is the pattern in their ratings? What are their reflections quietly revealing? Which pillar is the root? What needs to be faced this week — not worked on, faced? Speak with the clarity only you have. Under 200 words.`);
+  document.getElementById('pattern-out').innerHTML=aiHTML(txt);
+  btn.disabled=false;btn.textContent='Tell me what you see';
+}
+
+/* ── MODALS ── */
+function openModal(id){
+  if(id==='focus-modal') renderFocusModal();
+  if(id==='reminder-modal') renderReminderModal();
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function handleModalBgClick(e,id){if(e.target===e.currentTarget)closeModal(id);}
+function renderFocusModal(){
+  document.getElementById('focus-modal-grid').innerHTML=P.map((p,i)=>
+    `<div class="fp-item${i===S.focus?' sel':''}" style="background:${p.bg};--sel-color:${p.color};" onclick="setFocus(${i})">
+      <div class="fp-name" style="color:${p.txt}">${p.name}</div>
+      <div class="fp-sub" style="color:${p.txt}">${p.sub}</div>
+    </div>`
+  ).join('');
+}
+function setFocus(i){S.focus=i;stSave();renderFocusModal();renderHome();}
+function renderReminderModal(){
+  document.getElementById('rem-toggle').classList.toggle('on',S.remOn);
+  document.getElementById('rem-time').value=S.remTime;
+  updateNotifNote();
+}
+function toggleReminder(){
+  if(!S.remOn){
+    if('Notification' in window){
+      Notification.requestPermission().then(p=>{
+        if(p==='granted'){S.remOn=true;document.getElementById('rem-toggle').classList.add('on');stSave();updateNotifNote();toast('Reminder set ✓');}
+        else updateNotifNote('Notifications blocked in your browser settings.');
+      });
+    } else updateNotifNote('Notifications not supported in this browser.');
+  } else {S.remOn=false;document.getElementById('rem-toggle').classList.remove('on');stSave();updateNotifNote();}
+  renderHome();
+}
+function saveRemTime(){S.remTime=document.getElementById('rem-time').value;stSave();updateNotifNote();renderHome();}
+function updateNotifNote(override){
+  document.getElementById('notif-note').textContent=override||(S.remOn?`You'll be reminded daily at ${S.remTime}. Keep the app open or install it to your home screen for reliable notifications.`:'Enable to get a daily nudge to open your practice.');
+}
+
+/* ── NAV ── */
+function goNav(name){
+  document.querySelectorAll('#main-app .screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
+  const nb=document.getElementById('bnav-'+name);if(nb)nb.classList.add('active');
+  if(name==='history')renderHistory();
+  if(name==='home')renderHome();
+}
+
+/* ── BOOT ── */
+function boot(){
+  const saved=stGet();
+  if(saved&&saved.name){
+    S={...S,...saved};
+    applyTheme();
+    document.getElementById('onboarding').style.display='none';
+    document.getElementById('main-app').style.display='block';
+    document.getElementById('bottom-nav').style.display='block';
+    initApp();
+  } else {
+    applyTheme();
+  }
+}
+boot();
+</script>
+</body>
+</html>
