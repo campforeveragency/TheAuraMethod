@@ -321,12 +321,7 @@ canvas{width:100%;display:block;}
   <!-- STEP 2: The 4 pillars -->
   <div class="ob-step" id="ob1">
     <div class="ob-headline">Four pillars.<br><em>One daily<br>practice.</em></div>
-    <div class="ob-pillars">
-      <div class="ob-pill" style="background:var(--c1l)"><div class="ob-pill-num" style="color:var(--c1)">01</div><div class="ob-pill-name" style="color:var(--c1d)">Certainty</div><div class="ob-pill-sub">Know your value before anyone confirms it</div></div>
-      <div class="ob-pill" style="background:var(--c2l)"><div class="ob-pill-num" style="color:var(--c2)">02</div><div class="ob-pill-name" style="color:var(--c2d)">Calm</div><div class="ob-pill-sub">Stay grounded when the pressure is real</div></div>
-      <div class="ob-pill" style="background:var(--c3l)"><div class="ob-pill-num" style="color:var(--c3)">03</div><div class="ob-pill-name" style="color:var(--c3d)">Congruence</div><div class="ob-pill-sub">Actions match what you say you believe</div></div>
-      <div class="ob-pill" style="background:var(--c4l)"><div class="ob-pill-num" style="color:var(--c4)">04</div><div class="ob-pill-name" style="color:var(--c4d)">Contribution</div><div class="ob-pill-sub">Wealth follows those who stop chasing it</div></div>
-    </div>
+    <div class="ob-pillars" id="ob-pillars-grid"></div>
     <div class="ob-nav"><div class="ob-dots"><div class="ob-dot"></div><div class="ob-dot on"></div><div class="ob-dot"></div><div class="ob-dot"></div><div class="ob-dot"></div></div><button class="btn-back" onclick="obBack()">← Back</button><button class="btn-cta" onclick="obNext()">Next →</button></div>
   </div>
 
@@ -491,12 +486,7 @@ canvas{width:100%;display:block;}
       <div class="graph-card">
         <div class="graph-ttl">How your pillars move over time</div>
         <canvas id="graph-canvas" height="140"></canvas>
-        <div class="graph-legend">
-          <div class="gl-item"><div class="gl-dot" style="background:#6C63D4"></div>Certainty</div>
-          <div class="gl-item"><div class="gl-dot" style="background:#1A8A6A"></div>Calm</div>
-          <div class="gl-item"><div class="gl-dot" style="background:#C98A1A"></div>Congruence</div>
-          <div class="gl-item"><div class="gl-dot" style="background:#B03A62"></div>Contribution</div>
-        </div>
+        <div class="graph-legend" id="graph-legend"></div>
       </div>
       <div class="graph-card">
         <div class="ai-badge">Inner voice</div>
@@ -792,6 +782,23 @@ const CHS=P.flatMap(p=>[
     root.style.setProperty(`--c${n}l`,lighten(p.color,.12));
     root.style.setProperty(`--c${n}d`,p.color);
   });
+})();
+
+// Render onboarding pillars dynamically
+(function(){
+  const grid=document.getElementById('ob-pillars-grid');
+  if(grid) grid.innerHTML=P.map((p,i)=>
+    `<div class="ob-pill" style="background:${p.bg}">
+      <div class="ob-pill-num" style="color:${p.color}">0${i+1}</div>
+      <div class="ob-pill-name" style="color:${p.txt}">${p.name}</div>
+      <div class="ob-pill-sub">${p.sub}</div>
+    </div>`
+  ).join('');
+  // Render graph legend
+  const legend=document.getElementById('graph-legend');
+  if(legend) legend.innerHTML=P.map(p=>
+    `<div class="gl-item"><div class="gl-dot" style="background:${p.color}"></div>${p.name}</div>`
+  ).join('');
 })();
 // Store key for sessions
 const FW_KEY='tam_sessions_'+FW.key;
