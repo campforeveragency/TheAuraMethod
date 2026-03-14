@@ -3,135 +3,216 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="The Aura Method — A daily practice built on 4 pillars."/>
+<meta name="description" content="The Aura Method — Choose your path."/>
 <title>The Aura Method</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;height:100%;overflow:hidden;background:#08080a;font-family:'Syne',sans-serif;color:#f0ede6;cursor:none;}
-.cursor-dot{position:fixed;width:8px;height:8px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1000;mix-blend-mode:difference;transition:transform .08s;}
-.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:999;transition:left .1s ease,top .1s ease,width .35s ease,height .35s ease,border-color .35s ease;}
-body.hovering .cursor-ring{width:72px;height:72px;border-color:rgba(255,255,255,.12);}
-#c{position:fixed;inset:0;z-index:0;}
-.wordmark{position:fixed;top:2rem;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(240,237,230,.2);z-index:10;pointer-events:none;opacity:0;animation:up .8s ease forwards .4s;white-space:nowrap;}
-.content{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;pointer-events:none;}
-.headline{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,9vw,82px);font-weight:300;line-height:1.07;letter-spacing:-0.02em;margin-bottom:1.5rem;opacity:0;animation:up 1s ease forwards .9s;}
-.headline em{font-style:italic;color:rgba(240,237,230,.38);}
-.sub{font-size:11px;line-height:2;color:rgba(240,237,230,.32);letter-spacing:.06em;margin-bottom:3rem;opacity:0;animation:up .9s ease forwards 1.2s;}
-.cta{pointer-events:all;display:inline-flex;align-items:center;gap:14px;padding:15px 38px;border:1px solid rgba(240,237,230,.18);border-radius:100px;background:transparent;color:#f0ede6;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:border-color .3s,background .3s;opacity:0;animation:up .9s ease forwards 1.5s;cursor:none;}
-.cta:hover{border-color:rgba(240,237,230,.45);background:rgba(240,237,230,.03);}
-.cta-bar{width:22px;height:1px;background:currentColor;display:inline-block;transition:width .3s;}
-.cta:hover .cta-bar{width:34px;}
-.pillar-label{position:fixed;font-size:8px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;pointer-events:none;z-index:8;opacity:0;transition:opacity .5s;white-space:nowrap;text-align:center;width:90px;margin-left:-45px;margin-top:-7px;}
-.pillar-label.on{opacity:1;}
-.bottom{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);font-size:8px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,230,.12);z-index:10;pointer-events:none;opacity:0;animation:up .8s ease forwards 2s;white-space:nowrap;}
-@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:480px){html,body{cursor:auto;}.cursor-dot,.cursor-ring{display:none;}.headline{font-size:clamp(38px,12vw,62px);}}
+html,body{background:#07070a;font-family:'Syne',sans-serif;color:#f0ede6;cursor:none;overflow-x:hidden;}
+#c{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.logo-mark{opacity:.6;flex-shrink:0;}
+.orbit-1{transform-origin:24px 24px;animation:spin1 8s linear infinite;}
+.orbit-2{transform-origin:24px 24px;animation:spin2 12s linear infinite;}
+.orbit-core{transform-origin:24px 24px;animation:pulse-core 3s ease-in-out infinite;}
+@keyframes spin1{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes spin2{from{transform:rotate(0deg);}to{transform:rotate(-360deg);}}
+@keyframes pulse-core{0%,100%{transform:scale(1);opacity:.4;}50%{transform:scale(1.4);opacity:.85;}}width:5px;height:5px;background:#f0ede6;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1000;mix-blend-mode:difference;transition:transform .08s;}
+.cur-ring{position:fixed;width:28px;height:28px;border:0.5px solid rgba(240,237,230,.2);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:999;transition:left .12s ease,top .12s ease,width .3s,height .3s,border-color .3s;}
+.page{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:3.5rem 3rem 5rem;min-height:100vh;display:flex;flex-direction:column;}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:5rem;opacity:0;animation:up .7s ease forwards .2s;}
+.wordmark{font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(240,237,230,.2);}
+.top-right{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(240,237,230,.12);}
+.hero{margin-bottom:5rem;opacity:0;animation:up 1s ease forwards .5s;}
+.hero-eyebrow{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,230,.2);margin-bottom:1.2rem;}
+.hero-headline{font-family:'Cormorant Garamond',serif;font-size:clamp(52px,7vw,96px);font-weight:300;line-height:1.0;letter-spacing:-0.025em;}
+.hero-headline em{font-style:italic;color:rgba(240,237,230,.28);}
+.hero-rule{display:flex;align-items:center;gap:1.5rem;margin-top:1.75rem;}
+.hero-line{flex:1;height:0.5px;background:rgba(240,237,230,.08);}
+.hero-sub{font-size:11px;color:rgba(240,237,230,.25);letter-spacing:.06em;white-space:nowrap;}
+.fw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:0.5px solid rgba(240,237,230,.07);border-radius:2px;opacity:0;animation:up .9s ease forwards 1s;}
+.fw{position:relative;padding:1.75rem 1.75rem 1.5rem;border-right:0.5px solid rgba(240,237,230,.07);border-bottom:0.5px solid rgba(240,237,230,.07);text-decoration:none;display:block;cursor:none;overflow:hidden;transition:background .25s;}
+.fw:nth-child(3),.fw:nth-child(6){border-right:none;}
+.fw:nth-child(4),.fw:nth-child(5),.fw:nth-child(6){border-bottom:none;}
+.fw:hover{background:rgba(240,237,230,.025);}
+.fw-bg{position:absolute;inset:0;opacity:0;transition:opacity .3s;pointer-events:none;}
+.fw:hover .fw-bg{opacity:1;}
+.fw-num{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.1rem;opacity:.4;transition:opacity .2s;}
+.fw:hover .fw-num{opacity:.8;}
+.fw-name{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.2vw,30px);font-weight:400;line-height:1.1;margin-bottom:.5rem;color:#f0ede6;}
+.fw-tagline{font-size:10px;color:rgba(240,237,230,.3);line-height:1.65;margin-bottom:1.25rem;letter-spacing:.02em;transition:color .2s;}
+.fw:hover .fw-tagline{color:rgba(240,237,230,.45);}
+.fw-pillars{display:flex;flex-wrap:wrap;gap:5px;}
+.fw-pill{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px;border:0.5px solid;opacity:.55;transition:opacity .2s;}
+.fw:hover .fw-pill{opacity:.85;}
+.fw-arrow{position:absolute;top:1.75rem;right:1.75rem;font-size:13px;color:rgba(240,237,230,.15);transition:all .25s;}
+.fw:hover .fw-arrow{color:rgba(240,237,230,.5);transform:translate(2px,-2px);}
+.bottom-bar{display:flex;justify-content:space-between;align-items:center;margin-top:3rem;opacity:0;animation:up .7s ease forwards 1.5s;}
+.bottom-left{font-size:8px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(240,237,230,.1);}
+.bottom-right{font-size:8px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(240,237,230,.1);}
+@keyframes up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:800px){
+  .page{padding:2.5rem 1.5rem 4rem;}
+  .fw-grid{grid-template-columns:1fr 1fr;}
+  .fw:nth-child(3){border-right:0.5px solid rgba(240,237,230,.07);}
+  .fw:nth-child(2){border-right:none;}
+  .fw:nth-child(4){border-right:none;}
+  .fw:nth-child(4),.fw:nth-child(5),.fw:nth-child(6){border-bottom:0.5px solid rgba(240,237,230,.07);}
+  .fw:nth-child(5),.fw:nth-child(6){border-bottom:none;}
+  .top-bar{margin-bottom:3rem;}
+  .hero{margin-bottom:3rem;}
+}
+@media(max-width:480px){
+  .fw-grid{grid-template-columns:1fr;}
+  .fw{border-right:none !important;border-bottom:0.5px solid rgba(240,237,230,.07) !important;}
+  .fw:last-child{border-bottom:none !important;}
+  html,body{cursor:auto;}
+  .cur-dot,.cur-ring{display:none;}
+  .page{padding:2rem 1.25rem 3rem;}
+}
 </style>
 </head>
 <body>
-
-<div class="cursor-dot" id="dot"></div>
-<div class="cursor-ring" id="ring"></div>
 <canvas id="c"></canvas>
-
-<div class="wordmark">The Aura Method</div>
-
-<div class="pillar-label" id="pl0" style="color:#6C63D4">Certainty</div>
-<div class="pillar-label" id="pl1" style="color:#1A8A6A">Calm</div>
-<div class="pillar-label" id="pl2" style="color:#C98A1A">Congruence</div>
-<div class="pillar-label" id="pl3" style="color:#B03A62">Contribution</div>
-
-<div class="content">
-  <h1 class="headline">The signal<br><em>you've been<br>ignoring.</em></h1>
-  <p class="sub">Four pillars. One daily practice.<br>The truth you already carry.</p>
-  <a class="cta" href="./app.html" id="cta">
-    Enter the practice
-    <span class="cta-bar"></span>
-  </a>
+<div class="cur-dot" id="dot"></div>
+<div class="cur-ring" id="ring"></div>
+<div class="page">
+  <div class="top-bar">
+    <div class="wordmark">The Aura Method</div>
+    <svg class="logo-mark" width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M24 6 L24 42" stroke="rgba(240,237,230,0.12)" stroke-width="0.75"/>
+      <path d="M6 24 L42 24" stroke="rgba(240,237,230,0.12)" stroke-width="0.75"/>
+      <ellipse cx="24" cy="24" rx="18" ry="8" stroke="rgba(240,237,230,0.22)" stroke-width="0.75" class="orbit-1"/>
+      <ellipse cx="24" cy="24" rx="8" ry="18" stroke="rgba(240,237,230,0.22)" stroke-width="0.75" class="orbit-2"/>
+      <circle cx="24" cy="24" r="2.5" fill="rgba(240,237,230,0.4)" class="orbit-core"/>
+    </svg>
+  </div>
+  <div class="hero">
+    <div class="hero-eyebrow" id="eyebrow-quote"></div>
+    <h1 class="hero-headline">Choose your<br><em>philosophical<br>path.</em></h1>
+  </div>
+  <div class="fw-grid">
+    <a class="fw" href="./app.html?fw=hill">
+      <div class="fw-bg" style="background:radial-gradient(ellipse at 0% 0%,rgba(108,99,212,.06) 0%,transparent 70%)"></div>
+      <div class="fw-num" style="color:#6C63D4">01</div>
+      <div class="fw-name">Napoleon Hill</div>
+      <div class="fw-tagline">Wealth, mindset, and the power of belief. The original framework.</div>
+      <div class="fw-pillars">
+        <span class="fw-pill" style="color:#6C63D4;border-color:#6C63D4">Certainty</span>
+        <span class="fw-pill" style="color:#1A8A6A;border-color:#1A8A6A">Calm</span>
+        <span class="fw-pill" style="color:#C98A1A;border-color:#C98A1A">Congruence</span>
+        <span class="fw-pill" style="color:#B03A62;border-color:#B03A62">Contribution</span>
+      </div>
+      <span class="fw-arrow">→</span>
+    </a>
+    <a class="fw" href="./app.html?fw=aurelius">
+      <div class="fw-bg" style="background:radial-gradient(ellipse at 0% 0%,rgba(139,115,85,.06) 0%,transparent 70%)"></div>
+      <div class="fw-num" style="color:#8B7355">02</div>
+      <div class="fw-name">Marcus Aurelius</div>
+      <div class="fw-tagline">Stoic philosophy. Control what you can. Release what you cannot.</div>
+      <div class="fw-pillars">
+        <span class="fw-pill" style="color:#8B7355;border-color:#8B7355">Discipline</span>
+        <span class="fw-pill" style="color:#5C7A5C;border-color:#5C7A5C">Virtue</span>
+        <span class="fw-pill" style="color:#7A5C8B;border-color:#7A5C8B">Acceptance</span>
+        <span class="fw-pill" style="color:#7A6B4F;border-color:#7A6B4F">Service</span>
+      </div>
+      <span class="fw-arrow">→</span>
+    </a>
+    <a class="fw" href="./app.html?fw=suntzu">
+      <div class="fw-bg" style="background:radial-gradient(ellipse at 0% 0%,rgba(192,57,43,.06) 0%,transparent 70%)"></div>
+      <div class="fw-num" style="color:#C0392B">03</div>
+      <div class="fw-name">Sun Tzu</div>
+      <div class="fw-tagline">Strategy and the art of winning before the battle begins.</div>
+      <div class="fw-pillars">
+        <span class="fw-pill" style="color:#C0392B;border-color:#C0392B">Strategy</span>
+        <span class="fw-pill" style="color:#E67E22;border-color:#E67E22">Adaptability</span>
+        <span class="fw-pill" style="color:#8E44AD;border-color:#8E44AD">Deception</span>
+        <span class="fw-pill" style="color:#2980B9;border-color:#2980B9">Discipline</span>
+      </div>
+      <span class="fw-arrow">→</span>
+    </a>
+    <a class="fw" href="./app.html?fw=jung">
+      <div class="fw-bg" style="background:radial-gradient(ellipse at 0% 0%,rgba(74,111,165,.06) 0%,transparent 70%)"></div>
+      <div class="fw-num" style="color:#4A6FA5">04</div>
+      <div class="fw-name">Carl Jung</div>
+      <div class="fw-tagline">Shadow work and self-knowledge. Face what you've buried.</div>
+      <div class="fw-pillars">
+        <span class="fw-pill" style="color:#4A6FA5;border-color:#4A6FA5">Shadow</span>
+        <span class="fw-pill" style="color:#7B4E8E;border-color:#7B4E8E">Integration</span>
+        <span class="fw-pill" style="color:#3A7D6E;border-color:#3A7D6E">Individuation</span>
+        <span class="fw-pill" style="color:#8B6914;border-color:#8B6914">Archetype</span>
+      </div>
+      <span class="fw-arrow">→</span>
+    </a>
+    <a class="fw" href="./app.html?fw=laotzu">
+      <div class="fw-bg" style="background:radial-gradient(ellipse at 0% 0%,rgba(46,139,87,.06) 0%,transparent 70%)"></div>
+      <div class="fw-num" style="color:#2E8B57">05</div>
+      <div class="fw-name">Lao Tzu</div>
+      <div class="fw-tagline">Taoism and the way of flow. Strength through stillness.</div>
+      <div class="fw-pillars">
+        <span class="fw-pill" style="color:#2E8B57;border-color:#2E8B57">Wu Wei</span>
+        <span class="fw-pill" style="color:#4682B4;border-color:#4682B4">Balance</span>
+        <span class="fw-pill" style="color:#8FBC8F;border-color:#8FBC8F">Simplicity</span>
+        <span class="fw-pill" style="color:#708090;border-color:#708090">Humility</span>
+      </div>
+      <span class="fw-arrow">→</span>
+    </a>
+    <a class="fw" href="./app.html?fw=frankl">
+      <div class="fw-bg" style="background:radial-gradient(ellipse at 0% 0%,rgba(205,133,63,.06) 0%,transparent 70%)"></div>
+      <div class="fw-num" style="color:#CD853F">06</div>
+      <div class="fw-name">Viktor Frankl</div>
+      <div class="fw-tagline">Meaning and resilience. Find your why and endure any how.</div>
+      <div class="fw-pillars">
+        <span class="fw-pill" style="color:#CD853F;border-color:#CD853F">Meaning</span>
+        <span class="fw-pill" style="color:#A0522D;border-color:#A0522D">Responsibility</span>
+        <span class="fw-pill" style="color:#8B4513;border-color:#8B4513">Suffering</span>
+        <span class="fw-pill" style="color:#D2691E;border-color:#D2691E">Freedom</span>
+      </div>
+      <span class="fw-arrow">→</span>
+    </a>
+  </div>
 </div>
-
-<div class="bottom">Certainty &nbsp;·&nbsp; Calm &nbsp;·&nbsp; Congruence &nbsp;·&nbsp; Contribution</div>
-
 <script>
+const QUOTES=[
+  {q:"Whatever the mind can conceive and believe, it can achieve.",a:"Napoleon Hill"},
+  {q:"A man who cannot control himself will never be able to control others.",a:"Napoleon Hill"},
+  {q:"No man can become a permanent success without taking others along with him.",a:"Napoleon Hill"},
+  {q:"You have power over your mind, not outside events. Realize this, and you will find strength.",a:"Marcus Aurelius"},
+  {q:"Waste no more time arguing about what a good man should be. Be one.",a:"Marcus Aurelius"},
+  {q:"The impediment to action advances action. What stands in the way becomes the way.",a:"Marcus Aurelius"},
+  {q:"In the midst of chaos, there is also opportunity.",a:"Sun Tzu"},
+  {q:"Know yourself and know your enemy, and in a hundred battles you will never be defeated.",a:"Sun Tzu"},
+  {q:"Supreme excellence consists in breaking the enemy's resistance without fighting.",a:"Sun Tzu"},
+  {q:"Until you make the unconscious conscious, it will direct your life and you will call it fate.",a:"Carl Jung"},
+  {q:"The privilege of a lifetime is to become who you truly are.",a:"Carl Jung"},
+  {q:"Who looks outside, dreams. Who looks inside, awakes.",a:"Carl Jung"},
+  {q:"To the mind that is still, the whole universe surrenders.",a:"Lao Tzu"},
+  {q:"Nature does not hurry, yet everything is accomplished.",a:"Lao Tzu"},
+  {q:"Knowing others is intelligence. Knowing yourself is true wisdom.",a:"Lao Tzu"},
+  {q:"He who has a why to live for can bear almost any how.",a:"Viktor Frankl"},
+  {q:"Between stimulus and response there is a space. In that space is our power to choose.",a:"Viktor Frankl"},
+  {q:"Everything can be taken from a man but one thing: the last of the human freedoms.",a:"Viktor Frankl"},
+];
+const pick=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+const eyebrow=document.getElementById('eyebrow-quote');
+if(eyebrow) eyebrow.textContent=`"${pick.q}" — ${pick.a}`;
 const canvas=document.getElementById('c');
 const ctx=canvas.getContext('2d');
 const dot=document.getElementById('dot');
 const ring=document.getElementById('ring');
-const cta=document.getElementById('cta');
-let W,H,t=0,mx=0,my=0,lp=0;
-
-const P=[{r:[108,99,212]},{r:[26,138,106]},{r:[201,138,26]},{r:[176,58,98]}];
+let W,H,t=0,mx=0,my=0;
+const COLS=[[108,99,212],[26,138,106],[201,138,26],[176,58,98],[139,115,85],[192,57,43],[74,111,165],[46,139,87],[205,133,63]];
 const particles=[],rings=[],lines=[];
-
-function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;mx=W/2;my=H/2;}
+class Particle{constructor(x,y){this.x=x;this.y=y;const c=COLS[Math.floor(Math.random()*COLS.length)];this.r=c[0];this.g=c[1];this.b=c[2];this.vx=(Math.random()-.5)*1.1;this.vy=(Math.random()-.5)*1.1;this.life=1;this.decay=.005+Math.random()*.007;this.sz=Math.random()*1.6+.3;}update(){this.x+=this.vx;this.y+=this.vy;this.vx*=.98;this.vy*=.98;this.life-=this.decay;}draw(){ctx.save();ctx.globalAlpha=this.life*.45;ctx.fillStyle=`rgb(${this.r},${this.g},${this.b})`;ctx.beginPath();ctx.arc(this.x,this.y,this.sz,0,Math.PI*2);ctx.fill();ctx.restore();}}
+class Ring{constructor(x,y){const c=COLS[Math.floor(Math.random()*COLS.length)];this.x=x;this.y=y;this.r=c[0];this.g=c[1];this.b=c[2];this.rad=0;this.max=Math.random()*260+100;this.life=1;this.spd=.35+Math.random()*.45;}update(){this.rad+=this.spd;this.life=1-(this.rad/this.max);}draw(){ctx.save();ctx.globalAlpha=this.life*.08;ctx.strokeStyle=`rgb(${this.r},${this.g},${this.b})`;ctx.lineWidth=.6;ctx.beginPath();ctx.arc(this.x,this.y,this.rad,0,Math.PI*2);ctx.stroke();ctx.restore();}}
+class Line{constructor(){const c=COLS[Math.floor(Math.random()*COLS.length)];this.r=c[0];this.g=c[1];this.b=c[2];const e=Math.floor(Math.random()*4);if(e===0){this.x=Math.random()*W;this.y=0;}else if(e===1){this.x=W;this.y=Math.random()*H;}else if(e===2){this.x=Math.random()*W;this.y=H;}else{this.x=0;this.y=Math.random()*H;}const a=Math.atan2(H/2-this.y,W/2-this.x)+(Math.random()-.5)*.9;const s=.25+Math.random()*.4;this.vx=Math.cos(a)*s;this.vy=Math.sin(a)*s;this.life=1;this.trail=[];this.decay=.002+Math.random()*.003;}update(){this.trail.push({x:this.x,y:this.y});if(this.trail.length>90)this.trail.shift();this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;}draw(){if(this.trail.length<2)return;for(let i=1;i<this.trail.length;i++){const f=i/this.trail.length;ctx.save();ctx.globalAlpha=f*this.life*.12;ctx.strokeStyle=`rgb(${this.r},${this.g},${this.b})`;ctx.lineWidth=f*.7;ctx.beginPath();ctx.moveTo(this.trail[i-1].x,this.trail[i-1].y);ctx.lineTo(this.trail[i].x,this.trail[i].y);ctx.stroke();ctx.restore();}}}
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
 window.addEventListener('resize',resize);resize();
-
-class Particle{
-  constructor(x,y,pi){this.x=x;this.y=y;this.pi=pi;this.vx=(Math.random()-.5)*1.4;this.vy=(Math.random()-.5)*1.4;this.life=1;this.decay=.005+Math.random()*.007;this.sz=Math.random()*2+.4;}
-  update(){this.x+=this.vx;this.y+=this.vy;this.vx*=.98;this.vy*=.98;this.life-=this.decay;}
-  draw(){const c=P[this.pi].r;ctx.save();ctx.globalAlpha=this.life*.55;ctx.fillStyle=`rgb(${c[0]},${c[1]},${c[2]})`;ctx.beginPath();ctx.arc(this.x,this.y,this.sz,0,Math.PI*2);ctx.fill();ctx.restore();}
-}
-class Ring{
-  constructor(x,y,pi){this.x=x;this.y=y;this.r=0;this.max=Math.random()*200+80;this.life=1;this.c=P[pi].r;this.spd=.5+Math.random()*.5;}
-  update(){this.r+=this.spd;this.life=1-(this.r/this.max);}
-  draw(){ctx.save();ctx.globalAlpha=this.life*.1;ctx.strokeStyle=`rgb(${this.c[0]},${this.c[1]},${this.c[2]})`;ctx.lineWidth=.7;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.stroke();ctx.restore();}
-}
-class Line{
-  constructor(){this.pi=Math.floor(Math.random()*4);this.c=P[this.pi].r;const e=Math.floor(Math.random()*4);if(e===0){this.x=Math.random()*W;this.y=0;}else if(e===1){this.x=W;this.y=Math.random()*H;}else if(e===2){this.x=Math.random()*W;this.y=H;}else{this.x=0;this.y=Math.random()*H;}const a=Math.atan2(H/2-this.y,W/2-this.x)+(Math.random()-.5)*.9;const s=.3+Math.random()*.5;this.vx=Math.cos(a)*s;this.vy=Math.sin(a)*s;this.life=1;this.trail=[];this.decay=.0025+Math.random()*.003;}
-  update(){this.trail.push({x:this.x,y:this.y});if(this.trail.length>70)this.trail.shift();this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;}
-  draw(){if(this.trail.length<2)return;for(let i=1;i<this.trail.length;i++){const f=i/this.trail.length;ctx.save();ctx.globalAlpha=f*this.life*.15;ctx.strokeStyle=`rgb(${this.c[0]},${this.c[1]},${this.c[2]})`;ctx.lineWidth=f*.9;ctx.beginPath();ctx.moveTo(this.trail[i-1].x,this.trail[i-1].y);ctx.lineTo(this.trail[i].x,this.trail[i].y);ctx.stroke();ctx.restore();}}
-}
-
-document.addEventListener('mousemove',e=>{
-  mx=e.clientX;my=e.clientY;
-  dot.style.left=mx+'px';dot.style.top=my+'px';
-  ring.style.left=mx+'px';ring.style.top=my+'px';
-  if(Math.random()<.22){particles.push(new Particle(mx,my,lp));if(Math.random()<.07)rings.push(new Ring(mx,my,lp));if(Math.random()<.04)lp=(lp+1)%4;}
-});
-document.addEventListener('touchmove',e=>{const t=e.touches[0];mx=t.clientX;my=t.clientY;if(Math.random()<.4){particles.push(new Particle(mx,my,lp));if(Math.random()<.1)rings.push(new Ring(mx,my,lp));}},{passive:true});
-cta.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
-cta.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
-
-let spawnT=0;
-function spawnAmbient(){
-  spawnT++;
-  if(spawnT%45===0)lines.push(new Line());
-  if(spawnT%130===0)rings.push(new Ring(W/2+(Math.random()-.5)*W*.5,H/2+(Math.random()-.5)*H*.5,Math.floor(Math.random()*4)));
-}
-
-const labels=[document.getElementById('pl0'),document.getElementById('pl1'),document.getElementById('pl2'),document.getElementById('pl3')];
-function updateLabels(){
-  const cx=W/2,cy=H/2,rad=Math.min(W,H)*.35;
-  labels.forEach((el,i)=>{
-    const a=(t*.1)+(i*(Math.PI*2/4));
-    const x=cx+Math.cos(a)*rad;
-    const y=cy+Math.sin(a)*rad;
-    el.style.left=x+'px';el.style.top=y+'px';
-    el.classList.toggle('on',Math.hypot(x-mx,y-my)<150);
-  });
-}
-
-function loop(){
-  requestAnimationFrame(loop);
-  t+=.016;
-  ctx.fillStyle='rgba(8,8,10,.16)';
-  ctx.fillRect(0,0,W,H);
-  spawnAmbient();
-  updateLabels();
-  for(let i=rings.length-1;i>=0;i--){rings[i].update();rings[i].draw();if(rings[i].life<=0)rings.splice(i,1);}
-  for(let i=lines.length-1;i>=0;i--){lines[i].update();lines[i].draw();if(lines[i].life<=0||lines[i].x<-300||lines[i].x>W+300||lines[i].y<-300||lines[i].y>H+300)lines.splice(i,1);}
-  for(let i=particles.length-1;i>=0;i--){particles[i].update();particles[i].draw();if(particles[i].life<=0)particles.splice(i,1);}
-  const pulse=Math.sin(t*1.1)*.5+.5;
-  ctx.save();ctx.globalAlpha=.025+pulse*.02;
-  const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.min(W,H)*.38);
-  g.addColorStop(0,'rgba(240,237,230,1)');g.addColorStop(1,'rgba(240,237,230,0)');
-  ctx.fillStyle=g;ctx.beginPath();ctx.arc(W/2,H/2,Math.min(W,H)*.38,0,Math.PI*2);ctx.fill();ctx.restore();
-}
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=mx+'px';ring.style.top=my+'px';if(Math.random()<.18)particles.push(new Particle(mx,my));if(Math.random()<.04)rings.push(new Ring(mx,my));});
+document.addEventListener('touchmove',e=>{const touch=e.touches[0];if(Math.random()<.3)particles.push(new Particle(touch.clientX,touch.clientY));if(Math.random()<.07)rings.push(new Ring(touch.clientX,touch.clientY));},{passive:true});
+let st=0;
+function loop(){requestAnimationFrame(loop);t+=.016;ctx.fillStyle='rgba(7,7,10,.14)';ctx.fillRect(0,0,W,H);st++;if(st%55===0)lines.push(new Line());if(st%150===0)rings.push(new Ring(Math.random()*W,Math.random()*H));for(let i=rings.length-1;i>=0;i--){rings[i].update();rings[i].draw();if(rings[i].life<=0)rings.splice(i,1);}for(let i=lines.length-1;i>=0;i--){lines[i].update();lines[i].draw();if(lines[i].life<=0||lines[i].x<-300||lines[i].x>W+300||lines[i].y<-300||lines[i].y>H+300)lines.splice(i,1);}for(let i=particles.length-1;i>=0;i--){particles[i].update();particles[i].draw();if(particles[i].life<=0)particles.splice(i,1);}const pulse=Math.sin(t*.7)*.5+.5;ctx.save();ctx.globalAlpha=.015+pulse*.012;const g=ctx.createRadialGradient(W*.5,H*.3,0,W*.5,H*.3,Math.min(W,H)*.55);g.addColorStop(0,'rgba(240,237,230,1)');g.addColorStop(1,'rgba(240,237,230,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.restore();}
 loop();
-
-setTimeout(()=>{labels.forEach(l=>l.classList.add('on'));setTimeout(()=>labels.forEach(l=>l.classList.remove('on')),2500);},1800);
 </script>
 </body>
 </html>
