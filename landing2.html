@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="The Aura Method — A daily practice built on 4 pillars."/>
+<title>The Aura Method</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;background:#08080a;font-family:'Syne',sans-serif;color:#f0ede6;cursor:none;}
+.cursor-dot{position:fixed;width:8px;height:8px;background:#fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1000;mix-blend-mode:difference;transition:transform .08s;}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:999;transition:left .1s ease,top .1s ease,width .35s ease,height .35s ease,border-color .35s ease;}
+body.hovering .cursor-ring{width:72px;height:72px;border-color:rgba(255,255,255,.12);}
+#c{position:fixed;inset:0;z-index:0;}
+.wordmark{position:fixed;top:2rem;left:50%;transform:translateX(-50%);font-size:9px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:rgba(240,237,230,.2);z-index:10;pointer-events:none;opacity:0;animation:up .8s ease forwards .4s;white-space:nowrap;}
+.content{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;pointer-events:none;}
+.headline{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,9vw,82px);font-weight:300;line-height:1.07;letter-spacing:-0.02em;margin-bottom:1.5rem;opacity:0;animation:up 1s ease forwards .9s;}
+.headline em{font-style:italic;color:rgba(240,237,230,.38);}
+.sub{font-size:11px;line-height:2;color:rgba(240,237,230,.32);letter-spacing:.06em;margin-bottom:3rem;opacity:0;animation:up .9s ease forwards 1.2s;}
+.cta{pointer-events:all;display:inline-flex;align-items:center;gap:14px;padding:15px 38px;border:1px solid rgba(240,237,230,.18);border-radius:100px;background:transparent;color:#f0ede6;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:border-color .3s,background .3s;opacity:0;animation:up .9s ease forwards 1.5s;cursor:none;}
+.cta:hover{border-color:rgba(240,237,230,.45);background:rgba(240,237,230,.03);}
+.cta-bar{width:22px;height:1px;background:currentColor;display:inline-block;transition:width .3s;}
+.cta:hover .cta-bar{width:34px;}
+.pillar-label{position:fixed;font-size:8px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;pointer-events:none;z-index:8;opacity:0;transition:opacity .5s;white-space:nowrap;text-align:center;width:90px;margin-left:-45px;margin-top:-7px;}
+.pillar-label.on{opacity:1;}
+.bottom{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);font-size:8px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,237,230,.12);z-index:10;pointer-events:none;opacity:0;animation:up .8s ease forwards 2s;white-space:nowrap;}
+@keyframes up{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:480px){html,body{cursor:auto;}.cursor-dot,.cursor-ring{display:none;}.headline{font-size:clamp(38px,12vw,62px);}}
+</style>
+</head>
+<body>
+
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+<canvas id="c"></canvas>
+
+<div class="wordmark">The Aura Method</div>
+
+<div class="pillar-label" id="pl0" style="color:#6C63D4">Certainty</div>
+<div class="pillar-label" id="pl1" style="color:#1A8A6A">Calm</div>
+<div class="pillar-label" id="pl2" style="color:#C98A1A">Congruence</div>
+<div class="pillar-label" id="pl3" style="color:#B03A62">Contribution</div>
+
+<div class="content">
+  <h1 class="headline">The signal<br><em>you've been<br>ignoring.</em></h1>
+  <p class="sub">Four pillars. One daily practice.<br>The truth you already carry.</p>
+  <a class="cta" href="./index.html" id="cta">
+    Enter the practice
+    <span class="cta-bar"></span>
+  </a>
+</div>
+
+<div class="bottom">Certainty &nbsp;·&nbsp; Calm &nbsp;·&nbsp; Congruence &nbsp;·&nbsp; Contribution</div>
+
+<script>
+const canvas=document.getElementById('c');
+const ctx=canvas.getContext('2d');
+const dot=document.getElementById('dot');
+const ring=document.getElementById('ring');
+const cta=document.getElementById('cta');
+let W,H,t=0,mx=0,my=0,lp=0;
+
+const P=[{r:[108,99,212]},{r:[26,138,106]},{r:[201,138,26]},{r:[176,58,98]}];
+const particles=[],rings=[],lines=[];
+
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;mx=W/2;my=H/2;}
+window.addEventListener('resize',resize);resize();
+
+class Particle{
+  constructor(x,y,pi){this.x=x;this.y=y;this.pi=pi;this.vx=(Math.random()-.5)*1.4;this.vy=(Math.random()-.5)*1.4;this.life=1;this.decay=.005+Math.random()*.007;this.sz=Math.random()*2+.4;}
+  update(){this.x+=this.vx;this.y+=this.vy;this.vx*=.98;this.vy*=.98;this.life-=this.decay;}
+  draw(){const c=P[this.pi].r;ctx.save();ctx.globalAlpha=this.life*.55;ctx.fillStyle=`rgb(${c[0]},${c[1]},${c[2]})`;ctx.beginPath();ctx.arc(this.x,this.y,this.sz,0,Math.PI*2);ctx.fill();ctx.restore();}
+}
+class Ring{
+  constructor(x,y,pi){this.x=x;this.y=y;this.r=0;this.max=Math.random()*200+80;this.life=1;this.c=P[pi].r;this.spd=.5+Math.random()*.5;}
+  update(){this.r+=this.spd;this.life=1-(this.r/this.max);}
+  draw(){ctx.save();ctx.globalAlpha=this.life*.1;ctx.strokeStyle=`rgb(${this.c[0]},${this.c[1]},${this.c[2]})`;ctx.lineWidth=.7;ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.stroke();ctx.restore();}
+}
+class Line{
+  constructor(){this.pi=Math.floor(Math.random()*4);this.c=P[this.pi].r;const e=Math.floor(Math.random()*4);if(e===0){this.x=Math.random()*W;this.y=0;}else if(e===1){this.x=W;this.y=Math.random()*H;}else if(e===2){this.x=Math.random()*W;this.y=H;}else{this.x=0;this.y=Math.random()*H;}const a=Math.atan2(H/2-this.y,W/2-this.x)+(Math.random()-.5)*.9;const s=.3+Math.random()*.5;this.vx=Math.cos(a)*s;this.vy=Math.sin(a)*s;this.life=1;this.trail=[];this.decay=.0025+Math.random()*.003;}
+  update(){this.trail.push({x:this.x,y:this.y});if(this.trail.length>70)this.trail.shift();this.x+=this.vx;this.y+=this.vy;this.life-=this.decay;}
+  draw(){if(this.trail.length<2)return;for(let i=1;i<this.trail.length;i++){const f=i/this.trail.length;ctx.save();ctx.globalAlpha=f*this.life*.15;ctx.strokeStyle=`rgb(${this.c[0]},${this.c[1]},${this.c[2]})`;ctx.lineWidth=f*.9;ctx.beginPath();ctx.moveTo(this.trail[i-1].x,this.trail[i-1].y);ctx.lineTo(this.trail[i].x,this.trail[i].y);ctx.stroke();ctx.restore();}}
+}
+
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.left=mx+'px';dot.style.top=my+'px';
+  ring.style.left=mx+'px';ring.style.top=my+'px';
+  if(Math.random()<.22){particles.push(new Particle(mx,my,lp));if(Math.random()<.07)rings.push(new Ring(mx,my,lp));if(Math.random()<.04)lp=(lp+1)%4;}
+});
+document.addEventListener('touchmove',e=>{const t=e.touches[0];mx=t.clientX;my=t.clientY;if(Math.random()<.4){particles.push(new Particle(mx,my,lp));if(Math.random()<.1)rings.push(new Ring(mx,my,lp));}},{passive:true});
+cta.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+cta.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+
+let spawnT=0;
+function spawnAmbient(){
+  spawnT++;
+  if(spawnT%45===0)lines.push(new Line());
+  if(spawnT%130===0)rings.push(new Ring(W/2+(Math.random()-.5)*W*.5,H/2+(Math.random()-.5)*H*.5,Math.floor(Math.random()*4)));
+}
+
+const labels=[document.getElementById('pl0'),document.getElementById('pl1'),document.getElementById('pl2'),document.getElementById('pl3')];
+function updateLabels(){
+  const cx=W/2,cy=H/2,rad=Math.min(W,H)*.35;
+  labels.forEach((el,i)=>{
+    const a=(t*.1)+(i*(Math.PI*2/4));
+    const x=cx+Math.cos(a)*rad;
+    const y=cy+Math.sin(a)*rad;
+    el.style.left=x+'px';el.style.top=y+'px';
+    el.classList.toggle('on',Math.hypot(x-mx,y-my)<150);
+  });
+}
+
+function loop(){
+  requestAnimationFrame(loop);
+  t+=.016;
+  ctx.fillStyle='rgba(8,8,10,.16)';
+  ctx.fillRect(0,0,W,H);
+  spawnAmbient();
+  updateLabels();
+  for(let i=rings.length-1;i>=0;i--){rings[i].update();rings[i].draw();if(rings[i].life<=0)rings.splice(i,1);}
+  for(let i=lines.length-1;i>=0;i--){lines[i].update();lines[i].draw();if(lines[i].life<=0||lines[i].x<-300||lines[i].x>W+300||lines[i].y<-300||lines[i].y>H+300)lines.splice(i,1);}
+  for(let i=particles.length-1;i>=0;i--){particles[i].update();particles[i].draw();if(particles[i].life<=0)particles.splice(i,1);}
+  const pulse=Math.sin(t*1.1)*.5+.5;
+  ctx.save();ctx.globalAlpha=.025+pulse*.02;
+  const g=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.min(W,H)*.38);
+  g.addColorStop(0,'rgba(240,237,230,1)');g.addColorStop(1,'rgba(240,237,230,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(W/2,H/2,Math.min(W,H)*.38,0,Math.PI*2);ctx.fill();ctx.restore();
+}
+loop();
+
+setTimeout(()=>{labels.forEach(l=>l.classList.add('on'));setTimeout(()=>labels.forEach(l=>l.classList.remove('on')),2500);},1800);
+</script>
+</body>
+</html>
