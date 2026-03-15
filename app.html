@@ -437,7 +437,7 @@ canvas{width:100%;display:block;}
     <div class="learn-pscroll" id="learn-pscroll"></div>
     <div class="learn-tabs" id="learn-tabs">
       <button class="ltab on" onclick="goLTab('lesson',this)">Lesson</button>
-      <button class="ltab" onclick="goLTab('quote',this)">Hill Quote</button>
+      <button class="ltab" id="quote-tab" onclick="goLTab('quote',this)">Quote</button>
       <button class="ltab" onclick="goLTab('example',this)">Real Example</button>
       <button class="ltab" onclick="goLTab('exercise',this)">Exercise</button>
       <button class="ltab" onclick="goLTab('ai',this)">Deep Lesson</button>
@@ -794,7 +794,9 @@ const CHS=P.flatMap(p=>[
       <div class="ob-pill-sub">${p.sub}</div>
     </div>`
   ).join('');
-  // Render graph legend
+  // Set quote tab label
+  const quoteTab=document.getElementById('quote-tab');
+  if(quoteTab) quoteTab.textContent=FW.teacher.split(' ').pop()+' Quote';
   const legend=document.getElementById('graph-legend');
   if(legend) legend.innerHTML=P.map(p=>
     `<div class="gl-item"><div class="gl-dot" style="background:${p.color}"></div>${p.name}</div>`
