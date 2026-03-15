@@ -299,6 +299,52 @@ canvas{width:100%;display:block;}
 @media(min-width:481px){
   .theme-btn{right:calc(50% - 240px + 16px);}
 }
+
+/* ── DESKTOP ── */
+@media(min-width:768px){
+  #app{max-width:720px;margin:0 auto;position:relative;}
+  .bottom-nav{left:0;transform:none;width:100%;border-radius:0;}
+  .theme-btn{right:calc(50% - 360px + 16px);}
+  .fw-btn{left:calc(50% - 360px + 16px);}
+  .help-btn{right:calc(50% - 360px + 16px);}
+  .screen{padding-bottom:5rem;}
+  .home-hd{padding:2.5rem 2rem 1rem;padding-right:6rem;}
+  .home-greeting{font-size:clamp(28px,3vw,38px);}
+  .home-qa{grid-template-columns:repeat(4,1fr);padding:0 2rem;}
+  .home-pillars{padding:0 2rem 1.5rem;}
+  #home-pillar-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .focus-strip{margin:0 2rem 1rem;}
+  .first-nudge,.deep-lesson-surface{margin:0 2rem 1rem;}
+  .screen-hd{padding:2.5rem 2rem 1rem;}
+  .ci-wrap{padding:0 2rem 2rem;}
+  .ci-pill-row{display:grid;grid-template-columns:repeat(4,1fr);}
+  .hist-wrap{padding:0 2rem 2rem;}
+  .stat-row{grid-template-columns:repeat(3,1fr);}
+  .learn-pscroll{padding:1rem 2rem 0;}
+  .learn-tabs{padding:0 2rem;}
+  .learn-content{padding:0 2rem 2rem;}
+  .ob-step{max-width:520px;margin:0 auto;}
+  #onboarding{padding:3rem 2rem 4rem;}
+  .milestone-box{max-width:400px;}
+  .modal-box{border-radius:16px;margin-bottom:2rem;}
+}
+
+@media(min-width:1024px){
+  #app{max-width:860px;}
+  .theme-btn{right:calc(50% - 430px + 16px);}
+  .fw-btn{left:calc(50% - 430px + 16px);}
+  .help-btn{right:calc(50% - 430px + 16px);}
+  .home-qa{padding:0 2.5rem;}
+  .home-pillars{padding:0 2.5rem 1.5rem;}
+  .focus-strip{margin:0 2.5rem 1rem;}
+  .first-nudge,.deep-lesson-surface{margin:0 2.5rem 1rem;}
+  .screen-hd{padding:2.5rem 2.5rem 1rem;}
+  .ci-wrap,.hist-wrap{padding:0 2.5rem 2rem;}
+  .learn-pscroll{padding:1rem 2.5rem 0;}
+  .learn-tabs{padding:0 2.5rem;}
+  .learn-content{padding:0 2.5rem 2rem;}
+  .home-hd{padding:2.5rem 2.5rem 1rem;padding-right:7rem;}
+}
 #onboarding{padding:2.5rem 1.5rem 3rem;padding-top:3.5rem;}
 #screen-home .home-hd{padding-top:2rem;}
 </style>
