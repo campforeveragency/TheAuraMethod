@@ -83,8 +83,18 @@ html,body{height:100%;font-family:var(--font-ui);background:var(--bg);color:var(
 .fp-item{border-radius:var(--radius);padding:1rem;cursor:pointer;border:1.5px solid transparent;transition:all var(--transition);}
 .fp-item.sel{border-color:var(--sel-color,#6C63D4);}
 .fp-sub{font-size:11px;line-height:1.4;opacity:.75;}
-.ob-welcome-wrap{text-align:center;padding:1rem 0 2rem;}
-.ob-welcome-body{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:1.5rem;}
+.ob-welcome-wrap{text-align:center;padding:2rem 0;display:flex;flex-direction:column;align-items:center;}
+.ob-welcome-wrap>*{opacity:0;}
+.ob-welcome-wrap.animate>*:nth-child(1){animation:ethereal-in 1.8s ease .1s forwards;}
+.ob-welcome-wrap.animate>*:nth-child(2){animation:rule-draw .8s ease .8s forwards;}
+.ob-welcome-wrap.animate>*:nth-child(3){animation:ethereal-in 1.6s ease 1s forwards;}
+.ob-welcome-wrap.animate>*:nth-child(4){animation:ethereal-in 1.4s ease 1.5s forwards;}
+.ob-welcome-wrap.animate>*:nth-child(5){animation:ethereal-in 1.2s ease 2s forwards;}
+.ob-welcome-rule{width:0;height:0.5px;background:rgba(0,0,0,.15);margin:.6rem auto;}
+[data-theme="dark"] .ob-welcome-rule{background:rgba(240,237,230,.2);}
+@keyframes ethereal-in{0%{opacity:0;filter:blur(8px) brightness(2);}40%{filter:blur(2px) brightness(1.3);}100%{opacity:1;filter:blur(0) brightness(1);}}
+@keyframes rule-draw{0%{width:0;opacity:0;}100%{width:48px;opacity:1;}}
+.ob-welcome-body{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:1.5rem;max-width:340px;}
 .ob-focus-confirm{border-radius:var(--radius);padding:1.25rem;margin:1.5rem 0;text-align:left;}
 .ob-fc-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem;opacity:.65;}
 /* Already checked in state */
@@ -301,7 +311,19 @@ canvas{width:100%;display:block;}
 .time-input{width:100%;border:0.5px solid var(--bdr2);border-radius:var(--radius-sm);padding:10px 14px;font-family:var(--font-ui);font-size:14px;font-weight:600;color:var(--txt);background:var(--bg2);outline:none;margin-top:.5rem;}
 .notif-note{font-size:12px;color:var(--txt3);background:var(--bg2);border-radius:var(--radius-sm);padding:.75rem 1rem;line-height:1.6;margin-top:.85rem;}
 
-/* ── TOAST ── */
+/* ── SKELETONS ── */
+@keyframes shimmer{0%{opacity:.4;}50%{opacity:.9;}100%{opacity:.4;}}
+.sk{background:var(--bg3);border-radius:4px;animation:shimmer 1.6s ease-in-out infinite;}
+.sk-line{height:10px;margin-bottom:8px;border-radius:4px;}
+.sk-title{height:18px;width:70%;margin-bottom:12px;border-radius:4px;}
+.sk-eye{height:8px;width:40%;margin-bottom:10px;border-radius:4px;}
+.sk-card{background:var(--bg);border:0.5px solid var(--bdr);border-radius:var(--radius);padding:1.25rem;margin-bottom:.85rem;}
+.sk-quote{height:60px;border-radius:var(--radius-sm);margin-bottom:10px;}
+.sk-block{height:10px;border-radius:4px;margin-bottom:6px;}
+.sk-short{width:55%;}
+.sk-med{width:75%;}
+.sk-full{width:100%;}
+.sk-badge{height:18px;width:80px;border-radius:100px;margin-bottom:10px;}
 .toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--txt);color:var(--bg);padding:10px 22px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:.04em;transition:all .3s;z-index:999;white-space:nowrap;opacity:0;pointer-events:none;}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
 
@@ -417,12 +439,13 @@ canvas{width:100%;display:block;}
 
   <!-- STEP 6 -->
   <div class="ob-step" id="ob5">
-    <div class="ob-welcome-wrap">
+    <div class="ob-welcome-wrap" id="ob-welcome-wrap">
       <div class="ob-welcome-headline" id="ob-welcome-name">Welcome.</div>
+      <div class="ob-welcome-rule"></div>
       <div class="ob-welcome-body" id="ob-welcome-body"></div>
       <div class="ob-focus-confirm" id="ob-fc"></div>
+      <button class="btn-cta" id="ob-ready-btn" style="padding:14px 48px;margin-top:1.5rem;" onclick="obFinish()">I'm ready →</button>
     </div>
-    <div class="ob-nav" style="justify-content:center;"><button class="btn-cta" style="padding:14px 48px;" onclick="obFinish()">I'm ready →</button></div>
   </div>
 </div>
 
@@ -981,7 +1004,57 @@ const stSave=()=>{try{localStorage.setItem(FW_STATE,JSON.stringify(S));}catch{}}
 const todayStr=()=>new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
 const todayKey=()=>new Date().toISOString().split('T')[0];
 const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);};
-const ldHTML=()=>`<div class="ai-out"><div class="ld"><span></span><span></span><span></span></div></div>`;
+const ldHTML=()=>`<div class="ai-out"><div style="display:flex;gap:6px;align-items:center;padding:.5rem 0;"><div class="sk" style="width:8px;height:8px;border-radius:50%;animation-delay:0s;"></div><div class="sk" style="width:8px;height:8px;border-radius:50%;animation-delay:.2s;"></div><div class="sk" style="width:8px;height:8px;border-radius:50%;animation-delay:.4s;"></div></div></div>`;
+
+const WAITING_QUOTES={
+  hill:["\"Patience, persistence and perspiration make an unbeatable combination for success.\"","\"Every adversity carries with it the seed of an equal or greater benefit.\"","\"The strongest oak of the forest is not the one that is protected from the storm.\"","\"You are the master of your destiny. You can influence, direct and control your own environment.\""],
+  aurelius:["\"Confine yourself to the present.\"","\"How much more grievous are the consequences of anger than the causes of it.\"","\"The impediment to action advances action. What stands in the way becomes the way.\"","\"Receive without conceit, release without struggle.\""],
+  suntzu:["\"In the midst of chaos, there is also opportunity.\"","\"He will win who knows when to fight and when not to fight.\"","\"The supreme art of war is to subdue the enemy without fighting.\"","\"Opportunities multiply as they are seized.\""],
+  jung:["\"Who looks outside, dreams. Who looks inside, awakes.\"","\"Your vision will become clear only when you look into your heart.\"","\"The privilege of a lifetime is to become who you truly are.\"","\"Everything that irritates us about others can lead us to an understanding of ourselves.\""],
+  laotzu:["\"Nature does not hurry, yet everything is accomplished.\"","\"To the mind that is still, the whole universe surrenders.\"","\"Be patient and wait. Your mud will settle. Your water will be clear.\"","\"Act without expectation.\""],
+  frankl:["\"Between stimulus and response there is a space. In that space is our power to choose.\"","\"When we are no longer able to change a situation, we are challenged to change ourselves.\"","\"Those who have a why to live can bear almost any how.\"","\"Everything can be taken from a man but one thing — the freedom to choose one's attitude.\""]
+};
+
+let _waitInterval=null;
+function startWaitingQuote(el){
+  if(_waitInterval)clearInterval(_waitInterval);
+  const quotes=WAITING_QUOTES[FW.key]||WAITING_QUOTES.hill;
+  let qi=Math.floor(Math.random()*quotes.length);
+  const qEl=el.querySelector('.sk-waiting-quote');
+  if(!qEl)return;
+  qEl.textContent=quotes[qi];
+  qEl.style.opacity='1';
+  _waitInterval=setInterval(()=>{
+    qEl.style.opacity='0';
+    setTimeout(()=>{
+      qi=(qi+1)%quotes.length;
+      qEl.textContent=quotes[qi];
+      qEl.style.opacity='1';
+    },600);
+  },4000);
+}
+function stopWaitingQuote(){
+  if(_waitInterval){clearInterval(_waitInterval);_waitInterval=null;}
+}
+
+function skWithQuote(tabContent){
+  return `<div>${tabContent}<div style="padding:.75rem 0 .5rem;text-align:center;"><div class="sk-waiting-quote" style="font-family:var(--font-display);font-style:italic;font-size:13px;color:var(--txt3);line-height:1.6;transition:opacity .5s ease;opacity:0;padding:0 .5rem;"></div></div></div>`;
+}
+function skQuote(color){return `<div class="sk-card"><div class="sk sk-eye sk-short" style="margin-bottom:10px;"></div><div style="border-left:2.5px solid var(--bdr2);padding:.85rem 1.1rem;border-radius:0 var(--radius-sm) var(--radius-sm) 0;background:var(--bg2);margin:1rem 0;"><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div><div class="sk sk-block sk-short" style="margin-top:6px;height:7px;width:30%;"></div></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div></div>`;}
+function skExample(color){return `<div class="sk-card"><div class="sk sk-eye sk-med" style="margin-bottom:10px;"></div><div class="sk sk-badge"></div><div class="sk" style="height:16px;width:55%;border-radius:4px;margin-bottom:10px;"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div></div>`;}
+function skExercise(color){return `<div class="sk-card"><div class="sk sk-eye sk-med" style="margin-bottom:10px;"></div><div class="sk" style="height:20px;width:65%;border-radius:4px;margin-bottom:10px;"></div><div class="sk sk-badge" style="width:60px;margin-bottom:14px;"></div>${[1,2,3].map(()=>`<div style="display:flex;gap:10px;margin-bottom:12px;"><div class="sk" style="width:28px;height:28px;border-radius:50%;flex-shrink:0;"></div><div style="flex:1;"><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div></div></div>`).join('')}</div>`;}
+function skLesson(){return `<div class="sk-card"><div class="sk sk-eye sk-med" style="margin-bottom:10px;"></div><div class="sk sk-title"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div><div class="sk sk-block sk-short" style="margin-top:8px;"></div></div>`;}
+function skForTab(tab){
+  let inner;
+  switch(tab){
+    case 'lesson': inner=skLesson(); break;
+    case 'quote': inner=skQuote(); break;
+    case 'example': inner=skExample(); break;
+    case 'exercise': inner=skExercise(); break;
+    default: inner=`<div class="sk-card"><div class="sk sk-badge"></div><div class="sk sk-title"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div></div>`;
+  }
+  return skWithQuote(inner);
+}
 const aiHTML=txt=>`<div class="ai-out">${txt.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('')}</div>`;
 
 /* ── THEME ── */
@@ -1016,15 +1089,20 @@ function obToWelcome(){
   const n=document.getElementById('ob-name').value.trim()||'Friend';
   S.name=n;S.focus=obFocus;
   const fp=P[obFocus];
+  const OB=OB_CONTENT[FW.key]||OB_CONTENT.hill;
   document.getElementById('ob-welcome-name').textContent=`Welcome, ${n}.`;
+  document.getElementById('ob-welcome-body').innerHTML=OB.welcome;
   document.getElementById('ob-fc').innerHTML=`<div class="ob-fc-label">Your focus pillar</div><div class="ob-fc-name" style="color:${fp.color}">${fp.name}</div>`;
-  document.getElementById('ob-fc').style.background=fp.bg;
+  document.getElementById('ob-fc').style.cssText=`background:${fp.bg};border-radius:14px;padding:1.1rem 1.25rem;width:100%;text-align:left;`;
   document.getElementById('ob4').classList.remove('active');
   obStep=5;
   document.getElementById('ob5').classList.add('active');
-  // Trigger staggered animation after content is in DOM
-  const wrap=document.querySelector('.ob-welcome-wrap');
-  if(wrap){wrap.classList.remove('animate');requestAnimationFrame(()=>requestAnimationFrame(()=>wrap.classList.add('animate')));}
+  // Trigger staggered animation after DOM updates
+  const wrap=document.getElementById('ob-welcome-wrap');
+  if(wrap){
+    wrap.classList.remove('animate');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>wrap.classList.add('animate')));
+  }
 }
 function obBack(){
   if(obStep===0)return;
@@ -1136,6 +1214,47 @@ function renderHome(){
 /* ── LEARN ── */
 const DAILY_CACHE_KEY=`tam_daily_${FW.key}`;
 
+// Pre-generated fallback content — shown instantly if AI is unavailable
+const FALLBACK_CONTENT={
+  hill:[
+    {lesson:{title:"Certainty is a decision, not a feeling",body:"Most people wait to feel certain before they act. But certainty isn't something that arrives — it's something you choose. You walk in the same way you'd walk in if you already knew the outcome was yes. People invest in certainty before they invest in credentials."},quote:{text:'"Whatever the mind can conceive and believe, it can achieve."',commentary:"Your belief sets the ceiling. If you don't internally believe you deserve the outcome, you'll self-sabotage every path that leads there. Certainty is belief made physical."},example:{person:"Nipsey Hussle",tag:"Certainty in the market",body:"Sold mixtapes for $100 when everyone gave theirs away free. He knew the value before the market confirmed it. That certainty built a fanbase that paid premium — because he signaled it was worth premium."},exercise:{title:"The Value Inventory",duration:"10 min",steps:["Write 5 things you bring that no one in your circle can replicate. Not credentials — genuine strengths.","Say them out loud. Notice where your voice drops or you hesitate. That's the one that needs the most work.","Pick the truest one. Write it somewhere you'll see it tomorrow morning."]}},
+    {lesson:{title:"Calm is the most underrated form of power",body:"Anxiety broadcasts. People feel your tension before you speak. Calm doesn't mean you don't care — it means your sense of self isn't riding on any single outcome. High-pressure moments reward the person who can stay still inside while everything moves fast outside."},quote:{text:'"A man who cannot control himself will never be able to control others."',commentary:"Self-control is a prerequisite for influence. The moment you can hold your state regardless of environment, you become someone others look to as an anchor."},example:{person:"Kobe Bryant",tag:"Calm under maximum pressure",body:"In the 2010 NBA Finals Game 7, Kobe shot 6 for 24. He didn't pull back. He stayed calm, made the plays that were there, and won. Calm wasn't a mood — it was infrastructure built over years."},exercise:{title:"The 4-4-6 Reset",duration:"5 min",steps:["Find somewhere quiet. Sit upright — grounded, not rigid.","Breathe in for 4 counts, hold for 4, exhale for 6. Repeat 4 times.","Name the thing you're anxious about out loud. Then ask: will this matter in a year?"]}},
+    {lesson:{title:"The gap between what you say and what you do is loud",body:"Congruence is where most people quietly fall apart. Not publicly — internally. Your subconscious registers every gap between your stated beliefs and your actual behavior. When what you say doesn't match how you move, trust erodes before a word is spoken."},quote:{text:'"It is literally true that you can succeed best and quickest by helping others to succeed."',commentary:"When your stated purpose aligns with your daily actions, your word means something. Aligning actions with genuine contribution closes the gap faster than anything else."},example:{person:"Jay-Z",tag:"Living what he rapped",body:"Jay-Z didn't just rap about building wealth — he built it. Every business move was an extension of what he said on records. That congruence between what he said and what he built is why his brand sustained across decades."},exercise:{title:"The Audit",duration:"15 min",steps:["Write your top 3 stated beliefs — be specific, not vague.","Review your last 7 days honestly. Where did behavior match beliefs? Where did it contradict?","Find the one gap that repeats most. One congruent action to close it today."]}},
+    {lesson:{title:"Wealth follows those who stop chasing it",body:"The shift from 'what can I get' to 'what can I give' sounds like a cliché. It isn't. When your primary focus is contribution, you stop being transactional. You become someone worth knowing, worth referring, worth investing in. People feel the difference between someone extracting and someone contributing."},quote:{text:'"No man can become a permanent success without taking others along with him."',commentary:"Permanent success requires infrastructure: relationships, reputation, goodwill, trust. All of those are byproducts of genuine contribution. That's not charity — that's leverage built on real value."},example:{person:"Oprah Winfrey",tag:"Contribution as the core product",body:"Oprah didn't build a media empire by trying to build one. She built it by being relentlessly focused on helping people see themselves. The show was contribution first — and the business scale followed."},exercise:{title:"The Problem Scan",duration:"10 min",steps:["List 3 problems you've actually lived through and figured out, at least partially.","Who in your network is dealing with the same problem right now?","Identify one specific way you could help one person this week — not a business plan, just genuine help."]}}
+  ],
+  aurelius:[
+    {lesson:{title:"Discipline is freedom in disguise",body:"Most people experience discipline as a constraint. Marcus saw it differently. The undisciplined person is the least free of all — slaves to their moods and impulses. Discipline is the daily practice of choosing the harder right over the easier wrong."},quote:{text:'"You have power over your mind — not outside events. Realize this, and you will find strength."',commentary:"Marcus is not offering comfort here. The moment you stop fighting what you cannot control and invest that energy into mastering your own response, you become ungovernable by circumstance."},example:{person:"David Goggins",tag:"Discipline as identity",body:"Goggins didn't become the hardest man alive through motivation. He built a system of suffering-by-choice. What Marcus called the discipline of the will, Goggins calls callusing the mind. Voluntary hardship makes involuntary hardship bearable."},exercise:{title:"The Morning Discipline",duration:"10 min",steps:["Before anything enjoyable, do the one thing you've been avoiding.","Your mind will argue. Notice the argument. Don't engage it. Act anyway.","Write down what you did. One sentence. This becomes evidence of who you are."]}},
+    {lesson:{title:"Virtue is the only thing that cannot be taken from you",body:"Marcus ruled an empire and understood everything he ruled could be lost. What could not be lost was how he chose to act within whatever circumstances arose. Virtue isn't performance of goodness — it's the alignment of action with reason."},quote:{text:'"Waste no more time arguing about what a good man should be. Be one."',commentary:"All the philosophizing means nothing without action. The person who acts well without being able to articulate why is closer to wisdom than the person who can articulate everything and acts poorly."},example:{person:"Nelson Mandela",tag:"Virtue under pressure",body:"Twenty-seven years in prison. Released, he had every reason to pursue retribution. Instead he built a reconciliation process that became a model for the world. That is the Stoic definition of virtue: choosing what reason demands over what emotion wants."},exercise:{title:"The Virtue Audit",duration:"10 min",steps:["Name your four virtues: wisdom, justice, courage, temperance.","For each one: where did you embody it yesterday? Where did you fall short?","One repair: if you fell short somewhere that can be repaired today, repair it."]}},
+    {lesson:{title:"The dichotomy of control is the beginning of peace",body:"Epictetus taught one foundational principle: some things are in our power, and some are not. When you stop spending energy on what you cannot control, you have vastly more energy for what you can. Acceptance doesn't mean approval — it means clear-eyed acknowledgment of reality."},quote:{text:'"The impediment to action advances action. What stands in the way becomes the way."',commentary:"The obstacle isn't in your path — it is your path. The difficulty, the resistance, the failure — these are not interruptions to growth. They are the mechanism of it."},example:{person:"Viktor Frankl",tag:"Acceptance in extremity",body:"In Auschwitz, Frankl discovered the final human freedom: the freedom to choose one's response to any circumstance. He could not control the camp or his survival. He could control how he interpreted his suffering. That choice kept him alive."},exercise:{title:"The Control Inventory",duration:"8 min",steps:["Write one situation causing you anxiety or frustration right now.","Draw a line: left side is what's in your control, right side is what isn't.","Release the right column — just for today. Focus entirely on the left."]}},
+    {lesson:{title:"You are part of a whole — act like it",body:"Marcus understood leadership as the most demanding form of service — a daily obligation to act for the common good. The Stoics believed humans are social by nature. What harms one harms the whole. Service is not charity — it is the fulfillment of your function as a rational being."},quote:{text:'"What injures the hive injures the bee."',commentary:"Individual wellbeing and collective wellbeing are not separate things. When you harm your community, you harm yourself. When you contribute genuinely, you become more fully what you are."},example:{person:"Marcus Aurelius himself",tag:"Leadership as daily service",body:"Marcus wrote the Meditations for no audience — private notes to hold himself accountable. Every morning he asked: am I doing my duty? Am I treating others justly? The most powerful man in the world held himself to these questions daily."},exercise:{title:"The Service Question",duration:"5 min",steps:["Name one person in your immediate life who needs something from you.","Not a grand gesture. Attention, honesty, presence, or help.","Do it before the day is over. Service that stays in your head isn't service."]}}
+  ],
+  suntzu:[
+    {lesson:{title:"The battle is won before it is fought",body:"Sun Tzu's most misunderstood teaching is that war is won through preparation, not combat. Strategy means you have a framework. You know why you're doing what you're doing. And you've thought three moves ahead before anyone else has thought one."},quote:{text:'"In the midst of chaos, there is also opportunity."',commentary:"When circumstances change rapidly, the rigid operator sees only threat. The adaptive operator sees new terrain, new leverage points, new possibilities invisible to those still fighting the last battle."},example:{person:"Elon Musk",tag:"Strategic positioning",body:"Before Tesla, Musk spent years understanding the terrain — battery technology, manufacturing scale, distribution, regulatory environment. He identified where the leverage was before committing resources. Sun Tzu would recognize this as winning before the battle begins."},exercise:{title:"The Strategic Map",duration:"15 min",steps:["Define your current objective in one concrete sentence — not a category, an outcome.","List every obstacle between you and that outcome.","Identify your one move today that creates the most leverage against those obstacles."]}},
+    {lesson:{title:"Rigidity is weakness. Adaptability is strength.",body:"Sun Tzu used water as his central metaphor. Water has no fixed form — it flows around obstacles. The rigid mind breaks under pressure. The adaptive mind bends and reforms. This isn't inconsistency. It's the highest form of strategic intelligence."},quote:{text:'"He will win who knows when to fight and when not to fight."',commentary:"Most people fight every battle. The strategist chooses which battles are worth fighting. Knowing when to hold back isn't weakness — it's the discipline that preserves your strength for the battles that matter."},example:{person:"Steve Jobs",tag:"Adaptive pivoting",body:"Jobs was forced out of Apple in 1985. Rather than treating it as defeat, he founded NeXT and acquired Pixar. When Apple bought NeXT in 1997, the operating system became the foundation of everything that followed. The forced detour became the path."},exercise:{title:"The Pivot Exercise",duration:"10 min",steps:["Name one approach that isn't producing the results you expected.","Ask honestly: am I attached to this method because it's the best one, or because it's mine?","Generate three genuinely different approaches to the same objective. Pick one and act today."]}},
+    {lesson:{title:"Your greatest advantage is what others underestimate",body:"Sun Tzu's concept of deception isn't about dishonesty — it's about the strategic management of perception. The person who has quietly built something formidable and reveals it at the right moment is always more powerful than the person who narrated every step of the process."},quote:{text:'"Supreme excellence consists in breaking the enemy\'s resistance without fighting."',commentary:"The highest form of strategy is making conflict unnecessary. By the time your opponent recognizes your strength, the outcome is already decided. You don't win in the fight — you win in the preparation."},example:{person:"Jeff Bezos",tag:"Concealment of intent",body:"Amazon spent years appearing to be a bookstore while Bezos built infrastructure for something far larger. Competitors didn't take him seriously until it was too late. He appeared where he was not. That is Sun Tzu applied to business."},exercise:{title:"The Silence Practice",duration:"7 days",steps:["Identify one goal you've been announcing repeatedly to others.","For seven days, tell no one your progress. No updates. Just do the work.","Notice what changes in your focus and your sense of ownership over the goal."]}},
+    {lesson:{title:"Superior discipline is the greatest force multiplier",body:"A well-drilled force with inferior numbers can defeat a larger, undisciplined one. Training — the repetition of correct action until it becomes automatic — is the fundamental force multiplier available to any person. The undisciplined person is always improvising."},quote:{text:'"Opportunities multiply as they are seized."',commentary:"Action creates information. The person who moves creates new terrain to work with. The person who waits for perfect information is operating on stale intelligence while the world has already moved."},example:{person:"Kobe Bryant",tag:"Systematic preparation",body:"Kobe's 4am workouts were legendary not because of the time — but because of the system. By the time he faced the biggest moments, he had already lived through every version of failure in practice. His discipline had put him beyond the possibility of being surprised."},exercise:{title:"The Drill",duration:"Daily",steps:["Choose one thing you will do every day this week — specific, timed, non-negotiable.","Do it at the same time each day. Consistency of time removes the decision.","Make one mark on paper for each day completed. Seven marks by end of week."]}}
+  ],
+  jung:[
+    {lesson:{title:"The shadow is everything you refuse to be",body:"Jung identified the shadow as the unconscious part of the psyche containing everything the ego refuses to acknowledge. It surfaces as projection — you see in others what you can't acknowledge in yourself. Shadow work isn't about becoming your darkest impulses. It's about bringing them into consciousness where they can no longer act on you without your awareness."},quote:{text:'"Until you make the unconscious conscious, it will direct your life and you will call it fate."',commentary:"The forces shaping your life — the patterns you repeat, the relationships you choose, the self-sabotage you can't explain — most of them originate in the unconscious. Not making them conscious doesn't make them weaker. It makes them more powerful."},example:{person:"Carl Jung himself",tag:"Confronting the shadow",body:"During his break with Freud, Jung underwent his 'confrontation with the unconscious' — deliberately engaging with his own psyche through active imagination. He documented what he found, dialogued with it, integrated it. He called this the most important work of his life."},exercise:{title:"The Shadow Inventory",duration:"20 min",steps:["Name three people whose specific qualities provoke a strong reaction in you — irritation, contempt, or strong dislike.","Ask the Jungian question: where do I exhibit this quality, in some form?","What is the integrated gift inside the quality you're projecting?"]}},
+    {lesson:{title:"You cannot heal what you will not face",body:"Integration means bringing unconscious material into conscious awareness and assimilating it into a more complete sense of self. The alternative is splitting — maintaining a curated persona while disowning everything that doesn't fit. The disowned material doesn't vanish. It forms the shadow and exerts its influence in inverse proportion to your awareness of it."},quote:{text:'"The most terrifying thing is to accept oneself completely."',commentary:"The complete acceptance Jung describes isn't soft self-forgiveness — it's the unflinching acknowledgment of everything you are, including what you'd prefer not to be. That requires courage. Most people spend their lives managing the impression they make on themselves."},example:{person:"Brené Brown",tag:"Integration through vulnerability",body:"Brown's research revealed that what separates people who feel a deep sense of belonging from those who struggle is one thing: willingness to be seen completely. That is integration in practice. Not the performance of wholeness, but the actual confrontation with incompleteness."},exercise:{title:"The Integration Practice",duration:"15 min",steps:["Identify one thing you consistently hide — from others, from yourself.","Write it down without justification or defense. Just: this is part of me.","Ask what this part needs to be acknowledged. What has it been trying to tell you?"]}},
+    {lesson:{title:"Individuation is the lifelong work of becoming yourself",body:"Individuation describes the psychological process of developing a fully realized self — distinct from the collective, free from unconscious compulsion. It doesn't mean becoming more productive or more likable. It means becoming more fully and authentically yourself — which sometimes requires moving against the expectations of family, culture, and your own earlier self."},quote:{text:'"The privilege of a lifetime is to become who you truly are."',commentary:"Most people live their entire lives as partial selves — performing roles, meeting expectations, following scripts. To actually become who you are is rare. It requires willingness to disappoint, to be misunderstood, to walk away from identities that no longer fit."},example:{person:"Joseph Campbell",tag:"Following the individual path",body:"Campbell spent decades studying mythology and arrived at one organizing insight: every culture's stories are maps of the individual psyche. The hero's journey is the individuation process. He called the refusal to follow your own path 'the dragon not to be slain but to be embraced.'"},exercise:{title:"The Script Question",duration:"15 min",steps:["Write: 'I am supposed to be...' — fill it in honestly. What does the script say?","Write: 'I actually am...' — what do you know to be true that doesn't fit the script?","Where is the greatest distance between these two? That gap is where your individuation work lives."]}},
+    {lesson:{title:"You are not just yourself — you are also what moves through you",body:"Jung identified universal patterns in the collective unconscious he called archetypes. Understanding your dominant archetypes doesn't reduce you — it illuminates you. When you recognize that the drive pushing you toward achievement also contains the inflation that precedes a fall, you can work with it consciously."},quote:{text:'"Who looks outside, dreams. Who looks inside, awakes."',commentary:"Jung spent his life pointing inward — not as escape from the world, but as the only path to genuine engagement with it. The person who hasn't examined what drives them is at the mercy of those drives. That is what awakening means."},example:{person:"Steve Jobs",tag:"The Hero archetype",body:"Jobs embodied the Hero archetype in its fullness — including its shadow. The visionary who changed everything. The tyrant who destroyed people. The exile who returned transformed. Understanding this doesn't diminish him — it reveals how deeply archetypal forces shape even the most individual lives."},exercise:{title:"The Archetype Mirror",duration:"15 min",steps:["Identify your dominant archetype: Hero, Caregiver, Creator, Explorer, Sage, Rebel, Lover, Jester, Ruler, Magician.","Name its gift: what does this archetype enable in you?","Name its shadow: where does your archetype's shadow expression show up in your behavior?"]}}
+  ],
+  laotzu:[
+    {lesson:{title:"The way that cannot be forced",body:"Wu wei isn't passivity — it's the art of acting in alignment with the natural flow of things rather than against it. The tree doesn't force itself to grow. The river doesn't force itself to reach the sea. The question wu wei asks is: where am I forcing? What would it look like to find the way that flows naturally?"},quote:{text:'"Nature does not hurry, yet everything is accomplished."',commentary:"The natural world doesn't force, doesn't overcomplicate, doesn't add unnecessary steps. It follows the simplest path to what it needs. The human tendency to add more plans and more complexity when something isn't working is almost always the wrong response."},example:{person:"Bruce Lee",tag:"Wu Wei in motion",body:"Lee developed Jeet Kune Do from a core Taoist principle: be like water. Don't fight the opponent's force — redirect it. His famous instruction to 'be like water' is wu wei applied to combat. The softest thing overcoming the hardest thing."},exercise:{title:"The Non-Forcing Practice",duration:"10 min",steps:["Identify one area where you are constantly pushing against resistance.","If you removed the forcing, what would happen? What does this situation naturally want to do?","For one day, engage with this area from alignment rather than force. Notice what changes."]}},
+    {lesson:{title:"Every strength contains the seed of its opposite",body:"The Tao Te Ching is built on paradox because reality is built on paradox. Every thing contains its opposite, and every extreme eventually transforms into its counterpart. Your greatest strengths are also your greatest vulnerabilities. Balance isn't the avoidance of extremes — it's the conscious navigation between them."},quote:{text:'"To the mind that is still, the whole universe surrenders."',commentary:"Stillness is not emptiness — it is receptivity. The mind that is not grasping, not forcing, not anxiously seeking is open to receive what comes naturally. By releasing the need to control, you gain access to a deeper intelligence than the controlling mind possesses."},example:{person:"Satya Nadella",tag:"Balance of strength and humility",body:"When Nadella took over Microsoft, he brought what he called 'growth mindset' — willingness to be a beginner again, to balance confidence with openness. Under his leadership, the company became one of the most valuable in the world not by forcing more, but by opening more."},exercise:{title:"The Polarity Map",duration:"12 min",steps:["Name your strongest quality — the one you're most identified with.","Name its polar opposite — not the absence, but the opposite.","Where does your life need the opposite right now? One action today that expresses the underrepresented polarity."]}},
+    {lesson:{title:"Simplicity is the end of a long journey, not the beginning",body:"To attain knowledge, add things every day. To attain wisdom, remove things every day. Simplicity isn't minimalism as aesthetic — it's the relentless removal of what is not essential until only what is true remains. The simplest things contain the most. The most complex things often conceal the least."},quote:{text:'"Be patient and wait. Your mud will settle. Your water will be clear."',commentary:"Clarity doesn't come from agitation. When you stop stirring the water — stop forcing, analyzing, controlling — the sediment settles naturally and you can see through to the bottom. This is the Taoist method: patient stillness as a form of action."},example:{person:"Dieter Rams",tag:"Less but better",body:"The industrial designer who shaped Apple's aesthetic philosophy lived by one principle: good design is as little design as possible. Remove everything until only what is necessary remains. What's left is not less — it's more powerful precisely because the unnecessary has been cleared away."},exercise:{title:"The Removal Practice",duration:"15 min",steps:["List your current commitments — everything you're obligated to right now.","Ask which ones you would actively choose again if starting fresh today. Mark them.","Identify one commitment that exists for the weakest reason. Begin the process of releasing it."]}},
+    {lesson:{title:"The highest place is the lowest place",body:"Lao Tzu returned again and again to the image of water — which always seeks the lowest place, and yet overcomes everything. Humility isn't self-deprecation. It's the absence of the need to be seen as more than you are — which, paradoxically, makes you more effective than the person constantly asserting their importance."},quote:{text:'"Knowing others is intelligence. Knowing yourself is true wisdom."',commentary:"External mastery — of people, circumstances, the world — is the lower form. Internal mastery — of your reactions, your ego, your compulsions — is the higher. It begins with the humility to see yourself clearly, without the distortions of pride or self-protection."},example:{person:"Warren Buffett",tag:"Humility as competitive advantage",body:"Buffett has said the most important quality in an investor is temperament, not intellect. His willingness to sit in cash for years when he can't find value — when everyone else chases returns — is humility operating as strategy. The valley receives everything. The mountain is just watching."},exercise:{title:"The Humility Practice",duration:"10 min",steps:["Name one thing you were wrong about recently — not a trivial mistake, a real one.","Hold it without defense. Don't explain it away. Just: I was wrong about this.","What did being wrong reveal about how you see the world?"]}}
+  ],
+  frankl:[
+    {lesson:{title:"Meaning is not found — it is answered",body:"Frankl inverted the usual question. We ask: what is the meaning of life? He said the question itself is mistaken. Life asks the question of us. We are the ones who must answer — not in words, but in action. Not once, but continuously. The person who can find meaning in any circumstance possesses something suffering cannot take."},quote:{text:'"He who has a why to live for can bear almost any how."',commentary:"Frankl proved this in the most extreme laboratory imaginable. The concentration camp stripped everything material. What remained was the inner life — and specifically, whether that inner life contained a sufficient answer to the question of why."},example:{person:"Nelson Mandela",tag:"Meaning through injustice",body:"Twenty-seven years of imprisonment could have produced bitterness. Instead, Mandela used every year to prepare for what he understood to be his purpose. The imprisonment became part of the meaning, not an interruption to it. When he emerged, he was larger than when he entered."},exercise:{title:"The Meaning Question",duration:"15 min",steps:["Write: 'My life is asking me to...' — not what you want from life, but what life is asking of you.","Be specific: who needs something that only you can provide?","Connect today to it: one action today that is a direct response to the meaning you've identified."]}},
+    {lesson:{title:"Response-ability: the freedom no one can take",body:"Between stimulus and response, there is a space. In that space lies our freedom and our power to choose. This isn't comfortable teaching. Responsibility means there is no one to blame for how you are. Not your childhood, not your circumstances, not the people who wronged you. You choose how to move through it."},quote:{text:'"Between stimulus and response there is a space. In that space is our power to choose our response."',commentary:"The gap is real. You can feel it if you slow down enough — the moment between what happens to you and what you do about it. Expanding that gap through practice is the entire project of personal development. Everything else is downstream from this."},example:{person:"Oprah Winfrey",tag:"Radical responsibility",body:"Oprah grew up in conditions that statistically should have produced a very different outcome. She has spoken consistently about the moment she understood that her past was not her destiny — that she was responsible for what she became, regardless of what had been done to her."},exercise:{title:"The Response Gap",duration:"Daily practice",steps:["Identify a recurring trigger — something that reliably produces an automatic, unexamined reaction in you.","Today, when it happens: take one breath between the trigger and your response.","In that gap, ask: what response would the person I want to be choose here? Then choose that."]}},
+    {lesson:{title:"Unavoidable suffering is not wasted — it is raw material",body:"When suffering is unavoidable — when you cannot remove the source — the question becomes what you do with it. Suffering that has meaning is bearable. Suffering that is purely senseless is annihilating. The human psyche can endure enormous pain if it is connected to something larger."},quote:{text:'"In some way, suffering ceases to be suffering at the moment it finds a meaning."',commentary:"This is not comfort — it is a precise clinical observation. The ones who found meaning bore their suffering differently. Not without pain. But with something intact that meaningless suffering consumed. The meaning didn't remove the suffering. It transformed it."},example:{person:"Holocaust survivors who became advocates",tag:"Suffering as testimony",body:"Many survivors spent the remainder of their lives bearing witness — speaking in schools, writing memoirs, testifying. The act of testimony transformed their suffering into something with purpose: the prevention of future atrocity, the preservation of memory, the refusal to let the dead be forgotten."},exercise:{title:"The Meaning of This",duration:"15 min",steps:["Name a current suffering — something real you are carrying right now.","Ask: what is this asking of me? Not why is this happening, but what does it require?","How could this experience — through its difficulty — make you more useful to others?"]}},
+    {lesson:{title:"Freedom is not the absence of constraint — it is the presence of choice",body:"Frankl was stripped of everything. In the camps, he discovered that one freedom remained that no external power could remove — the freedom to determine his own inner response. This isn't a comfortable teaching. It means even in the worst circumstances, you remain a free being responsible for your inner life."},quote:{text:'"Everything can be taken from a man but one thing — the last of the human freedoms."',commentary:"Frankl proved this empirically, in the most brutal conditions imaginable. The people who maintained their inner freedom — who chose dignity, who chose meaning, who refused to be spiritually destroyed — remained fully human. That is not a small thing. That is everything."},example:{person:"Malala Yousafzai",tag:"Freedom through purpose",body:"Shot at fifteen for the act of going to school, Malala responded with greater commitment, not less. Her freedom was not located in her physical safety — it was located in her purpose. No bullet could reach that. She became more committed precisely because the attack revealed the stakes."},exercise:{title:"The Freedom Audit",duration:"10 min",steps:["Where do you feel most unfree right now? Name the specific circumstance.","Separate what is genuinely outside your control from what you've simply decided is outside your control.","In what cannot be changed: what attitude would serve you best? Choose it — not forever, just for today."]}}
+  ]
+};
+
+
 function getDailyCache(pillarIdx){
   try{
     const raw=localStorage.getItem(DAILY_CACHE_KEY);
@@ -1180,8 +1299,18 @@ function goLTab(name,el){
 async function generateDailyContent(pillarIdx){
   const p=P[pillarIdx];
   const el=document.getElementById('learn-content');
-  el.innerHTML=`<div class="card"><div class="ai-badge">Generating today's content</div><div class="card-eye" style="color:${p.color}">${p.name}</div><div class="ld"><span></span><span></span><span></span></div></div>`;
 
+  // Show fallback immediately — no waiting, no errors
+  const fallback=FALLBACK_CONTENT[FW.key]?.[pillarIdx];
+  if(fallback){
+    setDailyCache(pillarIdx,fallback);
+    renderLearnFromContent(p,fallback);
+  } else {
+    el.innerHTML=skForTab(learnTab);
+    startWaitingQuote(el);
+  }
+
+  // Attempt AI upgrade in background
   const prompt=`You are ${FW.teacher}. Generate today's fresh content for the pillar "${p.name}" (${p.sub}).
 
 Return ONLY valid JSON in exactly this structure, no markdown, no extra text:
@@ -1197,7 +1326,7 @@ Rules:
 - quote: a real quote from ${FW.teacher} about ${p.name}, with 2-sentence commentary
 - example: a real person who embodied ${p.name} in a surprising or powerful way
 - exercise: practical, specific, doable in the time given
-- Everything must feel fresh and different from yesterday — new angle, new example, new insight`;
+- Everything must feel fresh — new angle, new example, new insight. Different from yesterday.`;
 
   try{
     const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
@@ -1210,10 +1339,13 @@ Rules:
     const txt=d.content?.find(c=>c.type==='text')?.text||'';
     const clean=txt.replace(/```json|```/g,'').trim();
     const content=JSON.parse(clean);
+    stopWaitingQuote();
     setDailyCache(pillarIdx,content);
-    renderLearnFromContent(p,content);
+    // Only update if user is still on the same pillar/tab
+    if(learnP===pillarIdx) renderLearnFromContent(p,content);
   }catch(err){
-    el.innerHTML=`<div class="card"><div class="card-eye" style="color:${p.color}">${p.name}</div><p style="font-size:13px;color:var(--txt2);">Could not generate today's content. Check your connection and try again.</p><button class="btn-ghost" onclick="generateDailyContent(${pillarIdx})" style="margin-top:.75rem;">Try again</button></div>`;
+    stopWaitingQuote();
+    // Fallback already shown — silently fail, no error card
   }
 }
 
@@ -1454,7 +1586,7 @@ async function generateAILesson(){
   const btn=document.getElementById('ai-lesson-btn');
   if(!btn)return;
   btn.disabled=true;btn.textContent='Listening...';
-  document.getElementById('ai-lesson-out').innerHTML=ldHTML();
+  document.getElementById('ai-lesson-out').innerHTML=skLesson();
   const txt=await callAI(`The person is working on "${p.name}." Here is what they have been showing you:\n\n${hist}\n\nSpeak to them about ${p.name} as their subconscious. Surface what their pattern is revealing. Say the thing they already know but haven't let themselves hear. End with one thing — not a suggestion, a recognition of what they need to do next.`);
   document.getElementById('ai-lesson-out').innerHTML=aiHTML(txt);
   btn.disabled=false;btn.textContent='Hear it again';
@@ -1465,7 +1597,7 @@ async function getJournalFeedback(){
   if(ans.length<15){toast('Write more — don\'t filter it');return;}
   const btn=document.getElementById('btn-feedback');
   btn.disabled=true;btn.textContent='Reading between the lines...';
-  document.getElementById('feedback-out').innerHTML=ldHTML();
+  document.getElementById('feedback-out').innerHTML=`<div class="sk-card"><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div><div class="sk sk-block sk-short"></div></div>`;
   const rs=P.map((p,i)=>`${p.name}:${S.ratings[i]}/5`).join(', ');
   const txt=await callAI(`They wrote this:\n\n"${ans}"\n\nTheir pillar ratings today: ${rs}\n\nAs their subconscious, respond to what is actually written here — not just the words, but what the words are avoiding. What are they not saying? What does this reveal about where they truly are right now? Speak directly to them. Under 150 words.`);
   document.getElementById('feedback-out').innerHTML=aiHTML(txt);
@@ -1478,7 +1610,7 @@ async function getPersonalizedExercise(){
   if(!reflect&&!intend){toast('Write your reflection first');return;}
   const btn=document.getElementById('btn-exercise');
   btn.disabled=true;btn.textContent='Finding what you need...';
-  document.getElementById('exercise-out').innerHTML=ldHTML();
+  document.getElementById('exercise-out').innerHTML=skExercise();
   const nonZero=S.ratings.filter(r=>r>0);
   const weakest=nonZero.length?P[S.ratings.indexOf(Math.min(...nonZero.concat([6])))].name:'Certainty';
   const txt=await callAI(`Based on what they have written and shown you, prescribe one specific physical or behavioral practice for today.\n\nWhat they wrote: "${reflect||'none'}"\nWhat they intend: "${intend||'none'}"\nPillar ratings: ${P.map((p,i)=>`${p.name}:${S.ratings[i]}/5`).join(', ')}\nThe pillar asking for the most attention: ${weakest}\n\nAs their subconscious, prescribe — don't suggest. Give it a name, a duration, and 3-4 clear steps. Make it feel inevitable, like it was already waiting for them. Under 180 words.`);
@@ -1494,7 +1626,7 @@ async function getPatternAnalysis(){
   }
   const btn=document.getElementById('btn-pattern');
   btn.disabled=true;btn.textContent='Reading the pattern...';
-  document.getElementById('pattern-out').innerHTML=ldHTML();
+  document.getElementById('pattern-out').innerHTML=`<div class="sk-card"><div class="sk sk-badge"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-full"></div><div class="sk sk-block sk-med"></div><div class="sk sk-block sk-short"></div></div>`;
   const data=sessions.slice(0,14).map(s=>`${s.dateLabel} — ${P.map((p,i)=>`${p.name}:${s.ratings[i]}`).join(' ')} — "${(s.reflect||'').slice(0,60)}"`).join('\n');
   const txt=await callAI(`Here is everything they have shown you across their sessions:\n\n${data}\n\nAs their subconscious, tell them what you see. Not what you hope for them — what is actually here. What is the pattern in their ratings? What are their reflections quietly revealing? Which pillar is the root? What needs to be faced this week — not worked on, faced? Speak with the clarity only you have. Under 200 words.`);
   document.getElementById('pattern-out').innerHTML=aiHTML(txt);
