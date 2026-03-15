@@ -824,6 +824,95 @@ const FWQ=FW_QUESTIONS[FW.key]||FW_QUESTIONS.hill;
 const RQS=FWQ.rqs;
 const IQS=FWQ.iqs;
 
+// Inject framework-specific onboarding content
+const OB_CONTENT={
+  hill:{
+    h0:`You already know<br><em>what you need<br>to become.</em>`,
+    b0:`The Aura Method is a daily mirror built on Napoleon Hill's philosophy — that thoughts become things and belief is the foundation of all achievement. Each morning you rate yourself honestly across four pillars, write what's true, and your inner voice surfaces what you've been avoiding.`,
+    h1:`Four pillars.<br><em>One daily<br>practice.</em>`,
+    b2:`Each pillar is rated 1–5 daily. Hill believed every achievement begins with an honest inventory of where you stand:`,
+    ratings:[{n:'1',t:'Absent',d:'This pillar isn\'t showing up. Your behavior is telling the truth your mind won\'t.'},{n:'2–3',t:'Inconsistent',d:'The intention is there but the execution isn\'t. The gap is wide and you know it.'},{n:'4',t:'Developing',d:'You\'re building it deliberately. The foundation is real.'},{n:'5',t:'Embodied',d:'This pillar is operating through you — not performed, lived as identity.'}],
+    h4:`This practice<br><em>knows your name.</em>`,
+    nameLabel:'Who are you?',
+    focusLabel:'Where does the work begin?',
+    welcome:`Return here every morning. Rate each pillar without softening it. Write what's actually true. Your inner voice will surface the gap between who you are and who you're becoming — clearly, without flattery.<br><br>You already know what needs to change. This is the space where you stop pretending you don't.`,
+    navMirror:{title:'Daily check-in',desc:'Rate your pillars, reflect on yesterday, set today\'s intention. This is the core practice.'},
+    navDeeper:{title:'Learn & practice',desc:'Hill\'s lessons, real-world examples, exercises, and a deep lesson built from your history.'},
+    navPattern:{title:'Progress & insight',desc:'Your pillar ratings over time and a pattern analysis that reveals exactly where your mind is holding you back.'}
+  },
+  aurelius:{
+    h0:`The obstacle<br><em>is the way.</em>`,
+    b0:`This practice is built on the Meditations of Marcus Aurelius. Each morning you examine your four Stoic pillars honestly, write what yesterday revealed, and receive a reflection that calls out where you're fighting what you cannot control.`,
+    h1:`Four virtues.<br><em>One examined<br>life.</em>`,
+    b2:`Each pillar is rated 1–5. The Stoics believed that honest self-examination — not flattery — is the beginning of virtue:`,
+    ratings:[{n:'1',t:'Neglected',d:'You have not exercised this virtue today. The Stoic path begins with seeing this clearly.'},{n:'2–3',t:'Wavering',d:'You reach for it but circumstance moves you from it. The practice is inconsistent.'},{n:'4',t:'Practicing',d:'You are doing the work. The virtue is developing into habit.'},{n:'5',t:'Internalized',d:'It operates through your choices naturally. This is what Marcus called the disciplined will.'}],
+    h4:`The examined<br><em>life begins<br>with a name.</em>`,
+    nameLabel:'Who are you, really?',
+    focusLabel:'Which virtue needs the most work?',
+    welcome:`Every morning, return and examine the previous day without sentiment. Rate each virtue honestly. Write what actually happened — not what you wish had happened. The practice will reflect back what you already know but haven't been willing to record.<br><br>Marcus wrote his Meditations for no audience. This is the same — a private accounting with no one watching.`,
+    navMirror:{title:'Daily examination',desc:'Rate your virtues, examine yesterday\'s actions, set today\'s intention. Do it every morning without exception.'},
+    navDeeper:{title:'The Meditations',desc:'Aurelius\'s teachings, Stoic examples, exercises in virtue, and a deep reflection built from your own history.'},
+    navPattern:{title:'The long view',desc:'Your virtue ratings over time and a pattern analysis that surfaces where your character is genuinely developing.'}
+  },
+  suntzu:{
+    h0:`Know yourself.<br><em>Win before<br>the battle.</em>`,
+    b0:`This practice is built on Sun Tzu's Art of War. Each morning you assess your four strategic pillars, examine what yesterday's campaign revealed, and receive an analysis that surfaces where your strategy is strong and where you're exposed.`,
+    h1:`Four pillars.<br><em>One strategic<br>mind.</em>`,
+    b2:`Each pillar is rated 1–5. Sun Tzu believed that accurate self-assessment — not ego — determines the outcome of any campaign:`,
+    ratings:[{n:'1',t:'Compromised',d:'This position is weak and the enemy knows it. You cannot win from here without change.'},{n:'2–3',t:'Unstable',d:'You hold the position some days and lose it others. This inconsistency is exploitable.'},{n:'4',t:'Fortified',d:'Your position is strong. The foundation can support an offensive.'},{n:'5',t:'Dominant',d:'You control this terrain completely. Others feel it before you speak.'}],
+    h4:`The general<br><em>knows their<br>own name.</em>`,
+    nameLabel:'Who is the strategist?',
+    focusLabel:'Where is your weakest position?',
+    welcome:`Return every morning before the day's campaign begins. Rate each pillar without illusion — Sun Tzu said the general who doesn't know their weaknesses has already lost. Write what yesterday's terrain revealed. The practice will reflect back where you're exposed.<br><br>Every battle is won or lost before it's fought. This is where you do the winning.`,
+    navMirror:{title:'Morning briefing',desc:'Rate your pillars, examine yesterday\'s campaign, set today\'s strategic objective. Do this before anything else.'},
+    navDeeper:{title:'The Art of War',desc:'Sun Tzu\'s teachings applied to daily life, real strategic examples, drills, and a deep analysis built from your pattern.'},
+    navPattern:{title:'The campaign map',desc:'Your pillar ratings over time and a strategic analysis revealing where you\'re winning and where you\'re consistently losing ground.'}
+  },
+  jung:{
+    h0:`What you avoid<br><em>in yourself<br>controls you.</em>`,
+    b0:`This practice is built on Carl Jung's depth psychology. Each morning you examine your four psychological pillars, write what yesterday revealed about your shadow, and receive a reflection that surfaces what your unconscious is trying to tell you.`,
+    h1:`Four pillars.<br><em>One integrated<br>self.</em>`,
+    b2:`Each pillar is rated 1–5. Jung believed that honest confrontation with the self — not performance — is the only path to wholeness:`,
+    ratings:[{n:'1',t:'Projected',d:'You can\'t see this in yourself — only in others. The shadow is fully in charge here.'},{n:'2–3',t:'Glimpsed',d:'You see it occasionally but quickly look away. Integration has barely begun.'},{n:'4',t:'Integrating',d:'You\'re doing the work of bringing this into consciousness. It\'s real but incomplete.'},{n:'5',t:'Individuated',d:'This quality is fully yours — claimed, owned, expressed without performance.'}],
+    h4:`The self<br><em>already knows<br>your name.</em>`,
+    nameLabel:'Who do you present to the world?',
+    focusLabel:'Where does the shadow live most strongly?',
+    welcome:`Return every morning. Rate each pillar without the defense of self-justification. Write what yesterday actually revealed — not what you want it to mean. Your inner voice will surface what the unconscious has been signaling that the conscious mind keeps filing away.<br><br>Jung said the most terrifying thing is to accept oneself completely. This is where you begin.`,
+    navMirror:{title:'Daily analysis',desc:'Rate your pillars, examine what yesterday revealed about your shadow, set today\'s integration intention.'},
+    navDeeper:{title:'The depth work',desc:'Jungian teachings, real examples of individuation, shadow exercises, and a deep reflection built from your psychological history.'},
+    navPattern:{title:'The pattern revealed',desc:'Your pillar ratings over time and an analysis of what your unconscious patterns are consistently trying to show you.'}
+  },
+  laotzu:{
+    h0:`The way that<br><em>cannot be<br>forced.</em>`,
+    b0:`This practice is built on Lao Tzu's Tao Te Ching. Each morning you examine your four pillars of flow, write what yesterday's resistance revealed, and receive a reflection that surfaces where you're pushing against the natural current.`,
+    h1:`Four pillars.<br><em>One natural<br>way.</em>`,
+    b2:`Each pillar is rated 1–5. Lao Tzu taught that honest awareness of where you're forcing — not striving — reveals the path of least resistance:`,
+    ratings:[{n:'1',t:'Forcing',d:'You\'re completely against the current here. The harder you push, the further away it gets.'},{n:'2–3',t:'Striving',d:'You reach for it deliberately rather than allowing it. The effort is visible and it costs you.'},{n:'4',t:'Flowing',d:'You\'re beginning to move with it rather than against it. The resistance is softening.'},{n:'5',t:'Natural',d:'This quality operates through you effortlessly. Like water — it finds its own way.'}],
+    h4:`The valley<br><em>knows its own<br>name.</em>`,
+    nameLabel:'Who flows through you?',
+    focusLabel:'Where are you forcing instead of allowing?',
+    welcome:`Return every morning. Rate each pillar with the stillness of a mind that isn't grasping. Write what yesterday's resistance was showing you. The practice will reflect back where you're working against your own nature instead of moving with it.<br><br>Nature does not hurry, yet everything is accomplished. This is where you learn to stop hurrying.`,
+    navMirror:{title:'Morning stillness',desc:'Rate your pillars, observe yesterday\'s forcing and flowing, set today\'s intention to align with the natural way.'},
+    navDeeper:{title:'The Tao Te Ching',desc:'Lao Tzu\'s teachings on flow and simplicity, real examples of wu wei, practice exercises, and a deep reflection from your history.'},
+    navPattern:{title:'The natural current',desc:'Your pillar ratings over time and an analysis of where you consistently force and where you naturally flow.'}
+  },
+  frankl:{
+    h0:`He who has<br><em>a why can<br>bear any how.</em>`,
+    b0:`This practice is built on Viktor Frankl's logotherapy. Each morning you examine your four pillars of meaning, write what yesterday demanded of you, and receive a reflection that surfaces whether your life is answering the question it's being asked.`,
+    h1:`Four pillars.<br><em>One meaningful<br>life.</em>`,
+    b2:`Each pillar is rated 1–5. Frankl believed that honest confrontation with meaning — not comfort — is what makes a life bearable and a person strong:`,
+    ratings:[{n:'1',t:'Empty',d:'This pillar holds no meaning for you right now. You\'re going through the motions.'},{n:'2–3',t:'Searching',d:'You sense it should mean something but haven\'t found the why yet. The search is real.'},{n:'4',t:'Purposeful',d:'You know why this matters. The meaning sustains you even when it\'s difficult.'},{n:'5',t:'Answering',d:'You are living your response to life\'s question. This pillar is your testimony.'}],
+    h4:`Life asks<br><em>for your<br>name.</em>`,
+    nameLabel:'Who are you responsible to become?',
+    focusLabel:'Where does your meaning need the most attention?',
+    welcome:`Return every morning. Rate each pillar without the comfort of vague intention. Write what yesterday actually asked of you and how you responded. Your inner voice will surface where you're living meaningfully and where you're merely existing.<br><br>Frankl proved that meaning can be found in any circumstance. This is where you practice finding it before the circumstance demands it.`,
+    navMirror:{title:'Daily reckoning',desc:'Rate your pillars, examine what yesterday asked of you, choose today\'s response with intention.'},
+    navDeeper:{title:'The meaning work',desc:'Frankl\'s teachings on purpose and suffering, real examples of meaning in extremity, exercises, and a deep reflection from your history.'},
+    navPattern:{title:'The testimony',desc:'Your pillar ratings over time and an analysis of where your life is genuinely answering its own question.'}
+  }
+};
+
+
 // Build challenges from active framework pillars
 const CHS=P.flatMap(p=>[
   {p:p.name,c:p.color,q:`Name three things about ${p.name.toLowerCase()} you bring that no one else in your circle replicates. Say them out loud.`},
@@ -880,93 +969,7 @@ const CHS=P.flatMap(p=>[
   const ogTitle=document.querySelector('meta[property="og:title"]');
   if(ogTitle) ogTitle.content=`The Aura Method — ${FW.teacher}`;
 
-  // Inject framework-specific onboarding content
-  const OB_CONTENT={
-    hill:{
-      h0:`You already know<br><em>what you need<br>to become.</em>`,
-      b0:`The Aura Method is a daily mirror built on Napoleon Hill's philosophy — that thoughts become things and belief is the foundation of all achievement. Each morning you rate yourself honestly across four pillars, write what's true, and your inner voice surfaces what you've been avoiding.`,
-      h1:`Four pillars.<br><em>One daily<br>practice.</em>`,
-      b2:`Each pillar is rated 1–5 daily. Hill believed every achievement begins with an honest inventory of where you stand:`,
-      ratings:[{n:'1',t:'Absent',d:'This pillar isn\'t showing up. Your behavior is telling the truth your mind won\'t.'},{n:'2–3',t:'Inconsistent',d:'The intention is there but the execution isn\'t. The gap is wide and you know it.'},{n:'4',t:'Developing',d:'You\'re building it deliberately. The foundation is real.'},{n:'5',t:'Embodied',d:'This pillar is operating through you — not performed, lived as identity.'}],
-      h4:`This practice<br><em>knows your name.</em>`,
-      nameLabel:'Who are you?',
-      focusLabel:'Where does the work begin?',
-      welcome:`Return here every morning. Rate each pillar without softening it. Write what's actually true. Your inner voice will surface the gap between who you are and who you're becoming — clearly, without flattery.<br><br>You already know what needs to change. This is the space where you stop pretending you don't.`,
-      navMirror:{title:'Daily check-in',desc:'Rate your pillars, reflect on yesterday, set today\'s intention. This is the core practice.'},
-      navDeeper:{title:'Learn & practice',desc:'Hill\'s lessons, real-world examples, exercises, and a deep lesson built from your history.'},
-      navPattern:{title:'Progress & insight',desc:'Your pillar ratings over time and a pattern analysis that reveals exactly where your mind is holding you back.'}
-    },
-    aurelius:{
-      h0:`The obstacle<br><em>is the way.</em>`,
-      b0:`This practice is built on the Meditations of Marcus Aurelius. Each morning you examine your four Stoic pillars honestly, write what yesterday revealed, and receive a reflection that calls out where you're fighting what you cannot control.`,
-      h1:`Four virtues.<br><em>One examined<br>life.</em>`,
-      b2:`Each pillar is rated 1–5. The Stoics believed that honest self-examination — not flattery — is the beginning of virtue:`,
-      ratings:[{n:'1',t:'Neglected',d:'You have not exercised this virtue today. The Stoic path begins with seeing this clearly.'},{n:'2–3',t:'Wavering',d:'You reach for it but circumstance moves you from it. The practice is inconsistent.'},{n:'4',t:'Practicing',d:'You are doing the work. The virtue is developing into habit.'},{n:'5',t:'Internalized',d:'It operates through your choices naturally. This is what Marcus called the disciplined will.'}],
-      h4:`The examined<br><em>life begins<br>with a name.</em>`,
-      nameLabel:'Who are you, really?',
-      focusLabel:'Which virtue needs the most work?',
-      welcome:`Every morning, return and examine the previous day without sentiment. Rate each virtue honestly. Write what actually happened — not what you wish had happened. The practice will reflect back what you already know but haven't been willing to record.<br><br>Marcus wrote his Meditations for no audience. This is the same — a private accounting with no one watching.`,
-      navMirror:{title:'Daily examination',desc:'Rate your virtues, examine yesterday\'s actions, set today\'s intention. Do it every morning without exception.'},
-      navDeeper:{title:'The Meditations',desc:'Aurelius\'s teachings, Stoic examples, exercises in virtue, and a deep reflection built from your own history.'},
-      navPattern:{title:'The long view',desc:'Your virtue ratings over time and a pattern analysis that surfaces where your character is genuinely developing.'}
-    },
-    suntzu:{
-      h0:`Know yourself.<br><em>Win before<br>the battle.</em>`,
-      b0:`This practice is built on Sun Tzu's Art of War. Each morning you assess your four strategic pillars, examine what yesterday's campaign revealed, and receive an analysis that surfaces where your strategy is strong and where you're exposed.`,
-      h1:`Four pillars.<br><em>One strategic<br>mind.</em>`,
-      b2:`Each pillar is rated 1–5. Sun Tzu believed that accurate self-assessment — not ego — determines the outcome of any campaign:`,
-      ratings:[{n:'1',t:'Compromised',d:'This position is weak and the enemy knows it. You cannot win from here without change.'},{n:'2–3',t:'Unstable',d:'You hold the position some days and lose it others. This inconsistency is exploitable.'},{n:'4',t:'Fortified',d:'Your position is strong. The foundation can support an offensive.'},{n:'5',t:'Dominant',d:'You control this terrain completely. Others feel it before you speak.'}],
-      h4:`The general<br><em>knows their<br>own name.</em>`,
-      nameLabel:'Who is the strategist?',
-      focusLabel:'Where is your weakest position?',
-      welcome:`Return every morning before the day's campaign begins. Rate each pillar without illusion — Sun Tzu said the general who doesn't know their weaknesses has already lost. Write what yesterday's terrain revealed. The practice will reflect back where you're exposed.<br><br>Every battle is won or lost before it's fought. This is where you do the winning.`,
-      navMirror:{title:'Morning briefing',desc:'Rate your pillars, examine yesterday\'s campaign, set today\'s strategic objective. Do this before anything else.'},
-      navDeeper:{title:'The Art of War',desc:'Sun Tzu\'s teachings applied to daily life, real strategic examples, drills, and a deep analysis built from your pattern.'},
-      navPattern:{title:'The campaign map',desc:'Your pillar ratings over time and a strategic analysis revealing where you\'re winning and where you\'re consistently losing ground.'}
-    },
-    jung:{
-      h0:`What you avoid<br><em>in yourself<br>controls you.</em>`,
-      b0:`This practice is built on Carl Jung's depth psychology. Each morning you examine your four psychological pillars, write what yesterday revealed about your shadow, and receive a reflection that surfaces what your unconscious is trying to tell you.`,
-      h1:`Four pillars.<br><em>One integrated<br>self.</em>`,
-      b2:`Each pillar is rated 1–5. Jung believed that honest confrontation with the self — not performance — is the only path to wholeness:`,
-      ratings:[{n:'1',t:'Projected',d:'You can\'t see this in yourself — only in others. The shadow is fully in charge here.'},{n:'2–3',t:'Glimpsed',d:'You see it occasionally but quickly look away. Integration has barely begun.'},{n:'4',t:'Integrating',d:'You\'re doing the work of bringing this into consciousness. It\'s real but incomplete.'},{n:'5',t:'Individuated',d:'This quality is fully yours — claimed, owned, expressed without performance.'}],
-      h4:`The self<br><em>already knows<br>your name.</em>`,
-      nameLabel:'Who do you present to the world?',
-      focusLabel:'Where does the shadow live most strongly?',
-      welcome:`Return every morning. Rate each pillar without the defense of self-justification. Write what yesterday actually revealed — not what you want it to mean. Your inner voice will surface what the unconscious has been signaling that the conscious mind keeps filing away.<br><br>Jung said the most terrifying thing is to accept oneself completely. This is where you begin.`,
-      navMirror:{title:'Daily analysis',desc:'Rate your pillars, examine what yesterday revealed about your shadow, set today\'s integration intention.'},
-      navDeeper:{title:'The depth work',desc:'Jungian teachings, real examples of individuation, shadow exercises, and a deep reflection built from your psychological history.'},
-      navPattern:{title:'The pattern revealed',desc:'Your pillar ratings over time and an analysis of what your unconscious patterns are consistently trying to show you.'}
-    },
-    laotzu:{
-      h0:`The way that<br><em>cannot be<br>forced.</em>`,
-      b0:`This practice is built on Lao Tzu's Tao Te Ching. Each morning you examine your four pillars of flow, write what yesterday's resistance revealed, and receive a reflection that surfaces where you're pushing against the natural current.`,
-      h1:`Four pillars.<br><em>One natural<br>way.</em>`,
-      b2:`Each pillar is rated 1–5. Lao Tzu taught that honest awareness of where you're forcing — not striving — reveals the path of least resistance:`,
-      ratings:[{n:'1',t:'Forcing',d:'You\'re completely against the current here. The harder you push, the further away it gets.'},{n:'2–3',t:'Striving',d:'You reach for it deliberately rather than allowing it. The effort is visible and it costs you.'},{n:'4',t:'Flowing',d:'You\'re beginning to move with it rather than against it. The resistance is softening.'},{n:'5',t:'Natural',d:'This quality operates through you effortlessly. Like water — it finds its own way.'}],
-      h4:`The valley<br><em>knows its own<br>name.</em>`,
-      nameLabel:'Who flows through you?',
-      focusLabel:'Where are you forcing instead of allowing?',
-      welcome:`Return every morning. Rate each pillar with the stillness of a mind that isn't grasping. Write what yesterday's resistance was showing you. The practice will reflect back where you're working against your own nature instead of moving with it.<br><br>Nature does not hurry, yet everything is accomplished. This is where you learn to stop hurrying.`,
-      navMirror:{title:'Morning stillness',desc:'Rate your pillars, observe yesterday\'s forcing and flowing, set today\'s intention to align with the natural way.'},
-      navDeeper:{title:'The Tao Te Ching',desc:'Lao Tzu\'s teachings on flow and simplicity, real examples of wu wei, practice exercises, and a deep reflection from your history.'},
-      navPattern:{title:'The natural current',desc:'Your pillar ratings over time and an analysis of where you consistently force and where you naturally flow.'}
-    },
-    frankl:{
-      h0:`He who has<br><em>a why can<br>bear any how.</em>`,
-      b0:`This practice is built on Viktor Frankl's logotherapy. Each morning you examine your four pillars of meaning, write what yesterday demanded of you, and receive a reflection that surfaces whether your life is answering the question it's being asked.`,
-      h1:`Four pillars.<br><em>One meaningful<br>life.</em>`,
-      b2:`Each pillar is rated 1–5. Frankl believed that honest confrontation with meaning — not comfort — is what makes a life bearable and a person strong:`,
-      ratings:[{n:'1',t:'Empty',d:'This pillar holds no meaning for you right now. You\'re going through the motions.'},{n:'2–3',t:'Searching',d:'You sense it should mean something but haven\'t found the why yet. The search is real.'},{n:'4',t:'Purposeful',d:'You know why this matters. The meaning sustains you even when it\'s difficult.'},{n:'5',t:'Answering',d:'You are living your response to life\'s question. This pillar is your testimony.'}],
-      h4:`Life asks<br><em>for your<br>name.</em>`,
-      nameLabel:'Who are you responsible to become?',
-      focusLabel:'Where does your meaning need the most attention?',
-      welcome:`Return every morning. Rate each pillar without the comfort of vague intention. Write what yesterday actually asked of you and how you responded. Your inner voice will surface where you're living meaningfully and where you're merely existing.<br><br>Frankl proved that meaning can be found in any circumstance. This is where you practice finding it before the circumstance demands it.`,
-      navMirror:{title:'Daily reckoning',desc:'Rate your pillars, examine what yesterday asked of you, choose today\'s response with intention.'},
-      navDeeper:{title:'The meaning work',desc:'Frankl\'s teachings on purpose and suffering, real examples of meaning in extremity, exercises, and a deep reflection from your history.'},
-      navPattern:{title:'The testimony',desc:'Your pillar ratings over time and an analysis of where your life is genuinely answering its own question.'}
-    }
-  };
+
 
   const OB=OB_CONTENT[FW.key]||OB_CONTENT.hill;
   const set=(id,html)=>{const el=document.getElementById(id);if(el)el.innerHTML=html;};
@@ -1698,8 +1701,6 @@ function showFWBtn(){
 }
 function boot(){
   // Inject framework identity
-  const teacherEl=document.getElementById('ob-teacher');
-  if(teacherEl)teacherEl.textContent=FW.teacher;
   document.title=`The Aura Method — ${FW.teacher}`;
   document.getElementById('ob-wordmark').textContent=FW.teacher+' — The Aura Method';
   const saved=stGet();
