@@ -160,10 +160,7 @@ html,body{height:100%;font-family:var(--font-ui);background:var(--bg);color:var(
 .screen-eye{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt3);margin-bottom:.25rem;}
 .screen-title{font-family:var(--font-display);font-size:32px;font-weight:500;letter-spacing:-0.01em;}
 .ob-headline{font-family:var(--font-display);font-size:40px;font-weight:300;line-height:1.15;letter-spacing:-0.01em;margin-bottom:1rem;}
-.ob-welcome-wrap>*{opacity:0;}
-.ob-welcome-wrap.animate>*:nth-child(1){animation:up .5s ease .1s forwards;}
-.ob-welcome-wrap.animate>*:nth-child(2){animation:up .5s ease .3s forwards;}
-.ob-welcome-wrap.animate>*:nth-child(3){animation:up .5s ease .5s forwards;}
+.ob-welcome-body{font-size:14px;color:var(--txt2);line-height:1.75;margin-bottom:1.5rem;max-width:340px;}
 .home-greeting{font-family:var(--font-display);font-size:30px;font-weight:500;line-height:1.2;}
 .card-title{font-family:var(--font-display);font-size:22px;font-weight:500;line-height:1.3;margin-bottom:.75rem;}
 .stat-num{font-family:var(--font-display);font-size:36px;font-weight:500;}
@@ -1100,11 +1097,17 @@ function obToWelcome(){
   document.getElementById('ob4').classList.remove('active');
   obStep=5;
   document.getElementById('ob5').classList.add('active');
-  // Trigger staggered animation after DOM updates
+  // Reset then trigger animation — use setTimeout to ensure step is painted
   const wrap=document.getElementById('ob-welcome-wrap');
   if(wrap){
     wrap.classList.remove('animate');
-    requestAnimationFrame(()=>requestAnimationFrame(()=>wrap.classList.add('animate')));
+    // Remove any inline opacity overrides
+    Array.from(wrap.children).forEach(el=>el.style.opacity='');
+    setTimeout(()=>wrap.classList.add('animate'),50);
+    // Fallback: ensure everything is visible after animation should complete
+    setTimeout(()=>{
+      Array.from(wrap.children).forEach(el=>{if(getComputedStyle(el).opacity==='0')el.style.opacity='1';});
+    },3500);
   }
 }
 function obBack(){
